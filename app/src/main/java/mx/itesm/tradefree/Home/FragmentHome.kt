@@ -1,4 +1,4 @@
-package mx.itesm.tradefree.Register
+package mx.itesm.tradefree.Home
 
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
@@ -9,24 +9,24 @@ import android.view.ViewGroup
 
 import mx.itesm.tradefree.R
 
-class FragmentRegister : Fragment() {
+class FragmentHome : Fragment() {
 
     companion object {
-        fun newInstance() = FragmentRegister()
+        fun newInstance() = FragmentHome()
     }
 
-    private lateinit var viewModelRegister: ViewModelRegister
+    private lateinit var viewModelHome: ViewModelHome
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_register, container, false)
+        return inflater.inflate(R.layout.fragment_home, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModelRegister = ViewModelProviders.of(this).get(ViewModelRegister::class.java)
+        viewModelHome = ViewModelProviders.of(this).get(ViewModelHome::class.java)
         // TODO: Use the ViewModel
     }
 

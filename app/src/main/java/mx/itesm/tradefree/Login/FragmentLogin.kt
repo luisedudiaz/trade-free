@@ -15,7 +15,7 @@ class FragmentLogin : Fragment() {
         fun newInstance() = FragmentLogin()
     }
 
-    private lateinit var viewModel: FragmentLoginViewModel
+    private lateinit var viewModelLogin: ViewModelLogin
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -26,7 +26,7 @@ class FragmentLogin : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(FragmentLoginViewModel::class.java)
+        viewModelLogin = ViewModelProviders.of(this).get(ViewModelLogin::class.java)
         // TODO: Use the ViewModel
     }
 
