@@ -11,23 +11,15 @@ import mx.itesm.tradefree.R
 
 class FragmentProduct : Fragment() {
 
-    companion object {
-        fun newInstance() = FragmentProduct()
-    }
-
-    private lateinit var viewModel: ViewModelProduct
+    private lateinit var viewModelProduct: ViewModelProduct
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_product, container, false)
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(ViewModelProduct::class.java)
-        // TODO: Use the ViewModel
+        viewModelProduct = ViewModelProviders.of(this).get(ViewModelProduct::class.java)
+        val root = inflater.inflate(R.layout.fragment_product, container, false)
+        return root
     }
 
 }

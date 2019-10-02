@@ -15,19 +15,14 @@ class FragmentProfile : Fragment() {
         fun newInstance() = FragmentProfile()
     }
 
-    private lateinit var viewModel: ViewModelProfile
+    private lateinit var viewModelProfile: ViewModelProfile
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_profile, container, false)
+        viewModelProfile = ViewModelProviders.of(this).get(ViewModelProfile::class.java)
+        val root = inflater.inflate(R.layout.fragment_profile, container, false)
+        return root
     }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(ViewModelProfile::class.java)
-        // TODO: Use the ViewModel
-    }
-
 }

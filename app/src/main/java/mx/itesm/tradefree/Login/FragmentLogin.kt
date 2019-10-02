@@ -11,23 +11,16 @@ import mx.itesm.tradefree.R
 
 class FragmentLogin : Fragment() {
 
-    companion object {
-        fun newInstance() = FragmentLogin()
-    }
-
     private lateinit var viewModelLogin: ViewModelLogin
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_login, container, false)
+        viewModelLogin = ViewModelProviders.of(this).get(ViewModelLogin::class.java)
+        val root = inflater.inflate(R.layout.fragment_login, container, false)
+        return root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModelLogin = ViewModelProviders.of(this).get(ViewModelLogin::class.java)
-        // TODO: Use the ViewModel
-    }
 
 }

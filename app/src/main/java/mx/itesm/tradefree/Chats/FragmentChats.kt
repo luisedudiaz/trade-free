@@ -11,23 +11,14 @@ import mx.itesm.tradefree.R
 
 class FragmentChats : Fragment() {
 
-    companion object {
-        fun newInstance() = FragmentChats()
-    }
-
-    private lateinit var viewModel: ViewModelChats
+    private lateinit var viewModelChats: ViewModelChats
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_chats, container, false)
+        viewModelChats = ViewModelProviders.of(this).get(ViewModelChats::class.java)
+        val root = inflater.inflate(R.layout.fragment_chats, container, false)
+        return root
     }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(ViewModelChats::class.java)
-        // TODO: Use the ViewModel
-    }
-
 }

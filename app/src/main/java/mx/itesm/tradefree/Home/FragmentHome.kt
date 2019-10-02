@@ -11,23 +11,14 @@ import mx.itesm.tradefree.R
 
 class FragmentHome : Fragment() {
 
-    companion object {
-        fun newInstance() = FragmentHome()
-    }
-
     private lateinit var viewModelHome: ViewModelHome
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_home, container, false)
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
         viewModelHome = ViewModelProviders.of(this).get(ViewModelHome::class.java)
-        // TODO: Use the ViewModel
+        val root = inflater.inflate(R.layout.fragment_home, container, false)
+        return root
     }
-
 }

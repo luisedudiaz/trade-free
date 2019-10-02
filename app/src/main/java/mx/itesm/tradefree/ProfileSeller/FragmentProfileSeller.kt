@@ -11,23 +11,14 @@ import mx.itesm.tradefree.R
 
 class FragmentProfileSeller : Fragment() {
 
-    companion object {
-        fun newInstance() = FragmentProfileSeller()
-    }
-
-    private lateinit var viewModel: ViewModeltProfileSeller
+    private lateinit var viewModelProfileSeller: ViewModeltProfileSeller
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_profile_seller, container, false)
+        viewModelProfileSeller = ViewModelProviders.of(this).get(ViewModeltProfileSeller::class.java)
+        val root = inflater.inflate(R.layout.fragment_profile_seller, container, false)
+        return root
     }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(ViewModeltProfileSeller::class.java)
-        // TODO: Use the ViewModel
-    }
-
 }
