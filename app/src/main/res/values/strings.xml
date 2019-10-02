@@ -10,4 +10,6 @@
     <string name="last_name">Apellido Paterno</string>
     <string name="retype_password">Confirmar contraseña</string>
     <string name="create_account">Crear Cuenta</string>
+    <string name="logout">Cerrar Sesión</string>
+    <string name="profile">Perfil</string>
 </resources>

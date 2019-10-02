@@ -27,7 +27,6 @@ class FragmentLogin : Fragment() {
         val btnRegister: Button = root.findViewById(R.id.btnRegistrate)
         btnRegister.setOnClickListener {
             val intent = Intent(context, ActivityRegister::class.java)
-            viewModelLogin.sendMessageToA("D")
             startActivity(intent)
             /** This line is for delete an activity from the stack.
              *
