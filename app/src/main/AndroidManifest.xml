@@ -13,22 +13,16 @@
         <activity android:name=".Chats.ActivityChats" />
         <activity android:name=".ProfileSeller.ActivityProfileSeller" />
         <activity android:name=".Profile.ActivityProfile" />
-        <activity android:name=".Product.ActivityProduct" />
-        <activity android:name=".Home.ActivityHome">
+        <activity android:name=".Product.ActivityProduct">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
+e
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".Home.ActivityHome"></activity>
         <activity android:name=".Register.ActivityRegister"></activity>
-        <activity android:name=".Login.ActivityLogin">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".Login.ActivityLogin"></activity>
     </application>
 
 </manifest>
