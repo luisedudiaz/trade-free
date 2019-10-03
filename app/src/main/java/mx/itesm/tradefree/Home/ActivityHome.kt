@@ -9,14 +9,13 @@ import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_home.*
 import mx.itesm.tradefree.Login.ActivityLogin
 import mx.itesm.tradefree.R
-import mx.itesm.tradefree.Register.ActivityRegister
 
 class ActivityHome : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
-        fab.setOnClickListener { view ->
+        fabhome.setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show()
         }

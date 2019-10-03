@@ -7,6 +7,7 @@ import android.view.Menu
 import android.view.MenuItem
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_home.*
+import kotlinx.android.synthetic.main.activity_product.*
 import mx.itesm.tradefree.Login.ActivityLogin
 import mx.itesm.tradefree.R
 
@@ -15,7 +16,7 @@ class ActivityProduct : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_product)
-        fab.setOnClickListener { view ->
+        fabproduct.setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show()
         }
