@@ -1,5 +1,6 @@
 package mx.itesm.tradefree.Login
 
+import android.app.ProgressDialog
 import android.content.Intent
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
@@ -17,6 +18,7 @@ import mx.itesm.tradefree.Register.ActivityRegister
 class FragmentLogin : Fragment() {
 
     private lateinit var viewModelLogin: ViewModelLogin
+    private lateinit var dialog: ProgressDialog
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,6 +38,15 @@ class FragmentLogin : Fragment() {
 
         }
         return root
+    }
+
+    private fun mostrarDialogoEspera() {
+        this.dialog = ProgressDialog(context)
+        dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER)
+        dialog.setMessage("Descargando")
+        dialog.isIndeterminate = true
+        dialog.setCanceledOnTouchOutside(false)
+        dialog.show()
     }
 
 

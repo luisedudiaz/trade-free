@@ -1,5 +1,6 @@
 package mx.itesm.tradefree.Register
 
+import android.app.ProgressDialog
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -12,6 +13,7 @@ import mx.itesm.tradefree.R
 class FragmentRegister : Fragment() {
 
     private lateinit var viewModelRegister: ViewModelRegister
+    private lateinit var dialog: ProgressDialog
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -21,4 +23,14 @@ class FragmentRegister : Fragment() {
         val root = inflater.inflate(R.layout.fragment_register, container, false)
         return root
     }
+
+    private fun mostrarDialogoEspera() {
+        this.dialog = ProgressDialog(context)
+        dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER)
+        dialog.setMessage("Descargando")
+        dialog.isIndeterminate = true
+        dialog.setCanceledOnTouchOutside(false)
+        dialog.show()
+    }
+
 }
