@@ -30,14 +30,20 @@ class FragmentLogin : Fragment() {
         btnRegister.setOnClickListener {
             val intent = Intent(context, ActivityRegister::class.java)
             startActivity(intent)
-            /** This line is for delete an activity from the stack.
-             *
-             * activity?.finish()
-             *
-             */
+            val btnLogin: Button = root.findViewById(R.id.btnLogin)
+            btnLogin.setOnClickListener {
+                val intent = Intent(context, ActivityRegister::class.java)
+                startActivity(intent)
+                /** This line is for delete an activity from the stack.
+                 *
+                 * activity?.finish()
+                 *
+                 */
 
+            }
         }
         return root
+
     }
 
     private fun mostrarDialogoEspera() {

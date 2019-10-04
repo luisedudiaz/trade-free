@@ -1,14 +1,18 @@
 package mx.itesm.tradefree.Product
 
 import android.app.ProgressDialog
-import androidx.lifecycle.ViewModelProviders
+import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
+import android.widget.Button
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProviders
+import kotlinx.android.synthetic.main.fragment_product.*
 import mx.itesm.tradefree.R
+import mx.itesm.tradefree.Product.ActivityProduct
+
 
 class FragmentProduct : Fragment() {
 
@@ -21,8 +25,18 @@ class FragmentProduct : Fragment() {
     ): View? {
         viewModelProduct = ViewModelProviders.of(this).get(ViewModelProduct::class.java)
         val root = inflater.inflate(R.layout.fragment_product, container, false)
+        val btnSendMessageProduct : Button = root.findViewById(R.id.btnSendMessageProduct)
+        btnSendMessageProduct.setOnClickListener {
+            val intent = Intent(context, ActivityProduct::class.java)
+            startActivity(intent)
+        }
+
         return root
     }
+
+
+
+
 
     private fun mostrarDialogoEspera() {
         this.dialog = ProgressDialog(context)
@@ -32,5 +46,7 @@ class FragmentProduct : Fragment() {
         dialog.setCanceledOnTouchOutside(false)
         dialog.show()
     }
+
+
 
 }

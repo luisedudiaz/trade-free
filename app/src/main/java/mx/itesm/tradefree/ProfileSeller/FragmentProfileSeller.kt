@@ -25,6 +25,8 @@ class FragmentProfileSeller : Fragment() {
         return root
     }
 
+
+
     private fun mostrarDialogoEspera() {
         this.dialog = ProgressDialog(context)
         dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER)
