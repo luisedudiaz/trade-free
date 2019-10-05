@@ -12,4 +12,5 @@
     <string name="create_account">Crear Cuenta</string>
     <string name="logout">Cerrar Sesión</string>
     <string name="profile">Perfil</string>
+    <string name="loading">Cargando</string>
 </resources>
