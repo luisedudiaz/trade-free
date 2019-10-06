@@ -1,20 +1,22 @@
 package mx.itesm.tradefree.Login
 
-import android.app.ProgressDialog
-import android.content.Context
 import android.content.Intent
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.Toast
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.SignInButton
+import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.GoogleAuthProvider
 import kotlinx.android.synthetic.main.fragment_login.*
 import mx.itesm.tradefree.BaseFragment
 import mx.itesm.tradefree.Home.ActivityHome
@@ -26,6 +28,7 @@ class FragmentLogin : BaseFragment(), View.OnClickListener {
 
     private lateinit var viewModelLogin: ViewModelLogin
     private lateinit var auth: FirebaseAuth
+    private lateinit var googleSignInClient: GoogleSignInClient
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,11 +37,16 @@ class FragmentLogin : BaseFragment(), View.OnClickListener {
         viewModelLogin = ViewModelProviders.of(this).get(ViewModelLogin::class.java)
         val root = inflater.inflate(R.layout.fragment_login, container, false)
 
-        // Buttons
+        // Buttons Listeners
         val btnRegister: Button = root.findViewById(R.id.btnRegistrate)
         val btnLogin: Button = root.findViewById(R.id.btnLogin)
+        val btnGoogle: SignInButton = root.findViewById(R.id.btnGoogle)
         btnRegister.setOnClickListener(this)
         btnLogin.setOnClickListener(this)
+        btnGoogle.setOnClickListener(this)
+
+        // Google Sign In
+        googleSignIn()
 
         // Initialize Firebase Auth
         firebaseInit()
@@ -67,6 +75,23 @@ class FragmentLogin : BaseFragment(), View.OnClickListener {
         when(v?.id) {
             R.id.btnRegistrate -> signUpWithEmailPassword()
             R.id.btnLogin -> signInWithEmailPassword(inputEmailLogin.text.toString(), inputPasswordLogin.text.toString())
+            R.id.btnGoogle -> signInWithGoogle()
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == RC_SIGN_IN) {
+            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
+            try {
+                val account = task.getResult(ApiException::class.java)
+                firebaseAuthWithGoogle(account!!)
+            } catch (e: ApiException) {
+                // Google Sign In failed, update UI appropriately
+                Log.w(TAG, "Google sign in failed", e)
+
+            }
         }
     }
 
@@ -75,6 +100,39 @@ class FragmentLogin : BaseFragment(), View.OnClickListener {
      */
     private fun firebaseInit() {
         auth = FirebaseAuth.getInstance()
+    }
+
+    /**
+     *  Google signin configuration.
+     */
+    private fun googleSignIn() {
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(getString(R.string.default_web_client_id))
+            .requestEmail()
+            .build()
+        googleSignInClient = GoogleSignIn.getClient(requireActivity(), gso)
+    }
+
+    /**
+     *  This method authenticates the user with google credentials.
+     */
+    private fun firebaseAuthWithGoogle(acct: GoogleSignInAccount) {
+        Log.d(TAG, "firebaseAuthWithGoogle:" + acct.id!!)
+        val credential = GoogleAuthProvider.getCredential(acct.idToken, null)
+        auth.signInWithCredential(credential)
+            .addOnCompleteListener {
+                if (it.isSuccessful) {
+                    val intent = Intent(context, ActivityHome::class.java)
+                    startActivity(intent)
+                    activity?.finishAffinity()
+                    Log.d(TAG, "signInWithCredential:success")
+                    val user = auth.currentUser
+                } else {
+                    Log.w(TAG, "signInWithCredential:failure", it.exception)
+                    Toast.makeText(activity, LOGIN_ERROR,Toast.LENGTH_LONG).show()
+                }
+                hideProgressDialog()
+            }
     }
 
     /**
@@ -118,6 +176,15 @@ class FragmentLogin : BaseFragment(), View.OnClickListener {
     }
 
     /**
+     * This method sign the user with google.
+     */
+    private fun signInWithGoogle() {
+        showProgressDialog()
+        val signInIntent = googleSignInClient.signInIntent
+        startActivityForResult(signInIntent, RC_SIGN_IN)
+    }
+
+    /**
      * Validates if the email and password inputs are not blank.
      *
      * @return  If the user correctly fill their email and password.
@@ -132,7 +199,8 @@ class FragmentLogin : BaseFragment(), View.OnClickListener {
     }
 
     companion object {
-        private const val TAG = "LOGIN"
+        private const val TAG = "LOGIN_FRAGMENT"
+        private const val RC_SIGN_IN = 9001
         private const val LOGIN_ERROR = "Ingrese correctamente su correo y/o contraseña."
     }
 

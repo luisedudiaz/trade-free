@@ -6,6 +6,9 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -17,10 +20,14 @@ import mx.itesm.tradefree.R
 class ActivityHome : BaseActivity() {
 
     private lateinit var auth: FirebaseAuth
+    private lateinit var googleSignInClient: GoogleSignInClient
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
+
+        // Google Sign In
+        googleSignIn()
 
         // Initialize Firebase Auth.
         firebaseInit()
@@ -64,6 +71,8 @@ class ActivityHome : BaseActivity() {
     private fun signOut() {
         finishAffinity()
         auth.signOut()
+
+        googleSignInClient.signOut()
     }
 
     /**
@@ -71,6 +80,14 @@ class ActivityHome : BaseActivity() {
      */
     private fun firebaseInit() {
         auth = FirebaseAuth.getInstance()
+    }
+
+    private fun googleSignIn() {
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(getString(R.string.default_web_client_id))
+            .requestEmail()
+            .build()
+        googleSignInClient = GoogleSignIn.getClient(this, gso)
     }
 
     companion object {
