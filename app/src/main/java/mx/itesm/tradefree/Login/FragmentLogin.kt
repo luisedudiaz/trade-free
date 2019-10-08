@@ -1,5 +1,6 @@
 package mx.itesm.tradefree.Login
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
@@ -18,7 +19,6 @@ import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
-import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.fragment_login.*
 import mx.itesm.tradefree.BaseFragment
@@ -26,6 +26,8 @@ import mx.itesm.tradefree.Home.ActivityHome
 import mx.itesm.tradefree.Models.User
 import mx.itesm.tradefree.R
 import mx.itesm.tradefree.Register.ActivityRegister
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class FragmentLogin : BaseFragment(), View.OnClickListener {
@@ -220,7 +222,7 @@ class FragmentLogin : BaseFragment(), View.OnClickListener {
         // Write new user
         writeNewUser(user.uid, user.displayName!!, user.email)
 
-        // Go to MainActivity
+        // Go to ActivityHome
         val intent = Intent(context, ActivityHome::class.java)
         startActivity(intent)
         activity?.finishAffinity()
@@ -230,8 +232,19 @@ class FragmentLogin : BaseFragment(), View.OnClickListener {
      *  This method creates a new user in the database.
      */
     private fun writeNewUser(userId: String, name: String, email: String?) {
-        val user = User(name, email!!, listOf())
+        val currentDate = getDate()
+        val user = User(name, email!!,"buyer", currentDate, emptyList())
         db.reference.child("/users").child(userId).setValue(user)
+    }
+
+    /**
+     *  This method return the current system date.
+     *  @return Current system date.
+     */
+    @SuppressLint("SimpleDateFormat")
+    private fun getDate(): String {
+        val sdf = SimpleDateFormat("dd/M/yyyy hh:mm:ss")
+        return sdf.format(Date())
     }
 
     companion object {

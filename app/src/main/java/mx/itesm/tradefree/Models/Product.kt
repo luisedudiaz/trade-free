@@ -1,3 +1,7 @@
 package mx.itesm.tradefree.Models
 
-class Product()
+data class Product(
+    val title: String,
+    val description: String,
+    val images: List<Image>
+)
