@@ -118,7 +118,7 @@ class FragmentRegister : BaseFragment(), View.OnClickListener {
         val name = inputNameRegister.text.toString()
         val lastName = inputLastNameRegister.text.toString()
         // Write new user
-        writeNewUser(user.uid, name + lastName, user.email)
+        writeNewUser(user.uid, "$name $lastName", user.email)
 
         // Go to MainActivity
         val intent = Intent(context, ActivityHome::class.java)
