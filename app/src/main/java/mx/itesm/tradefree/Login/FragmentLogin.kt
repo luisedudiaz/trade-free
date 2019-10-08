@@ -32,6 +32,10 @@ import java.util.*
 
 class FragmentLogin : BaseFragment(), View.OnClickListener {
 
+
+
+    //spaces for the stash
+
     private lateinit var viewModelLogin: ViewModelLogin
     private lateinit var auth: FirebaseAuth
     private lateinit var db: FirebaseDatabase
@@ -51,7 +55,7 @@ class FragmentLogin : BaseFragment(), View.OnClickListener {
         btnRegister.setOnClickListener(this)
         btnLogin.setOnClickListener(this)
         btnGoogle.setOnClickListener(this)
-
+        //Someother stash try 
         // Google Sign In
         googleSignIn()
 
