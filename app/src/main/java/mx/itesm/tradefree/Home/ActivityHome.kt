@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Switch
+import android.widget.Toast
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -16,6 +17,7 @@ import com.google.firebase.auth.FirebaseUser
 import kotlinx.android.synthetic.main.activity_home.*
 import mx.itesm.tradefree.BaseActivity
 import mx.itesm.tradefree.Login.ActivityLogin
+import mx.itesm.tradefree.Login.FragmentLogin
 import mx.itesm.tradefree.ProfileSeller.ActivityProfileSeller
 import mx.itesm.tradefree.R
 
@@ -53,6 +55,11 @@ class ActivityHome : BaseActivity() {
         Log.d(TAG, currentUser?.email.toString())
     }
 
+    override fun onResume() {
+        super.onResume()
+        Toast.makeText(this,"Some text" ,Toast.LENGTH_SHORT).show()
+
+    }
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.settings_menu, menu)
         return true
@@ -77,6 +84,7 @@ class ActivityHome : BaseActivity() {
         val intent = Intent(this, ActivityProfileSeller::class.java)
         startActivity(intent)
         hideProgressDialog()
+
     }
 
 
