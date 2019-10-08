@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Switch
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -15,6 +16,7 @@ import com.google.firebase.auth.FirebaseUser
 import kotlinx.android.synthetic.main.activity_home.*
 import mx.itesm.tradefree.BaseActivity
 import mx.itesm.tradefree.Login.ActivityLogin
+import mx.itesm.tradefree.ProfileSeller.ActivityProfileSeller
 import mx.itesm.tradefree.R
 
 class ActivityHome : BaseActivity() {
@@ -37,6 +39,17 @@ class ActivityHome : BaseActivity() {
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show()
         }
+
+        //Check the sw for activation
+        val swVendedor = findViewById<Switch>(R.id.swVendedor)
+        swVendedor?.setOnCheckedChangeListener({ _, isChecked ->
+            val msg = if (isChecked) "ON"
+            else "OFF"
+            swVendedor.text = msg
+            if (swVendedor.isChecked == true){
+                swVendedor_on()
+            }
+        })
     }
 
     override fun onStart() {
@@ -65,13 +78,24 @@ class ActivityHome : BaseActivity() {
         }
     }
 
+    fun swVendedor_on(){
+        val intent = Intent(this, ActivityProfileSeller::class.java)
+        startActivity(intent)
+        hideProgressDialog()
+    }
+    fun swVendedor_off(){
+        val intent = Intent(this, ActivityHome::class.java)
+        startActivity(intent)
+        hideProgressDialog()
+    }
+
+
     /**
      *  This method ends the user session.
      */
     private fun signOut() {
         finishAffinity()
         auth.signOut()
-
         googleSignInClient.signOut()
     }
 
