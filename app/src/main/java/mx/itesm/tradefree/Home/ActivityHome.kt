@@ -41,15 +41,10 @@ class ActivityHome : BaseActivity() {
         }
 
         //Check the sw for activation
-        val swVendedor = findViewById<Switch>(R.id.swVendedor)
-        swVendedor?.setOnCheckedChangeListener({ _, isChecked ->
-            val msg = if (isChecked) "ON"
-            else "OFF"
-            swVendedor.text = msg
-            if (swVendedor.isChecked == true){
-                swVendedor_on()
-            }
-        })
+            val swVendedor = findViewById<Switch>(R.id.swVendedor)
+            swVendedor?.setOnCheckedChangeListener({ _, isChecked ->
+                if (isChecked) swVendedor_on() else "OFF"
+            })
     }
 
     override fun onStart() {
@@ -80,11 +75,6 @@ class ActivityHome : BaseActivity() {
 
     fun swVendedor_on(){
         val intent = Intent(this, ActivityProfileSeller::class.java)
-        startActivity(intent)
-        hideProgressDialog()
-    }
-    fun swVendedor_off(){
-        val intent = Intent(this, ActivityHome::class.java)
         startActivity(intent)
         hideProgressDialog()
     }
