@@ -16,10 +16,14 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.SignInButton
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.fragment_login.*
 import mx.itesm.tradefree.BaseFragment
 import mx.itesm.tradefree.Home.ActivityHome
+import mx.itesm.tradefree.Models.User
 import mx.itesm.tradefree.R
 import mx.itesm.tradefree.Register.ActivityRegister
 
@@ -28,6 +32,7 @@ class FragmentLogin : BaseFragment(), View.OnClickListener {
 
     private lateinit var viewModelLogin: ViewModelLogin
     private lateinit var auth: FirebaseAuth
+    private lateinit var db: FirebaseDatabase
     private lateinit var googleSignInClient: GoogleSignInClient
 
     override fun onCreateView(
@@ -50,6 +55,10 @@ class FragmentLogin : BaseFragment(), View.OnClickListener {
 
         // Initialize Firebase Auth
         firebaseInit()
+        
+        // Initialize Firebase Database
+        firebaseDatabaseInit()
+
 
         return root
 
@@ -103,6 +112,13 @@ class FragmentLogin : BaseFragment(), View.OnClickListener {
     }
 
     /**
+     *  Firebase Database initialization.
+     */
+    private fun firebaseDatabaseInit() {
+        db = FirebaseDatabase.getInstance()
+    }
+
+    /**
      *  Google signin configuration.
      */
     private fun googleSignIn() {
@@ -122,11 +138,9 @@ class FragmentLogin : BaseFragment(), View.OnClickListener {
         auth.signInWithCredential(credential)
             .addOnCompleteListener {
                 if (it.isSuccessful) {
-                    val intent = Intent(context, ActivityHome::class.java)
-                    startActivity(intent)
-                    activity?.finishAffinity()
                     Log.d(TAG, "signInWithCredential:success")
                     val user = auth.currentUser
+                    onAuthSuccess(user!!)
                 } else {
                     Log.w(TAG, "signInWithCredential:failure", it.exception)
                     Toast.makeText(activity, LOGIN_ERROR,Toast.LENGTH_LONG).show()
@@ -196,6 +210,28 @@ class FragmentLogin : BaseFragment(), View.OnClickListener {
         if (email.isEmpty()) valid = false
         if (password.isEmpty()) valid = false
         return valid
+    }
+
+    /**
+     *  This method is called if authentication success.
+     */
+    private fun onAuthSuccess(user: FirebaseUser) {
+
+        // Write new user
+        writeNewUser(user.uid, user.displayName!!, user.email)
+
+        // Go to MainActivity
+        val intent = Intent(context, ActivityHome::class.java)
+        startActivity(intent)
+        activity?.finishAffinity()
+    }
+
+    /**
+     *  This method creates a new user in the database.
+     */
+    private fun writeNewUser(userId: String, name: String, email: String?) {
+        val user = User(name, email!!, listOf())
+        db.reference.child("/users").child(userId).setValue(user)
     }
 
     companion object {

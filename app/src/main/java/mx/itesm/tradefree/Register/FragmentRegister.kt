@@ -10,9 +10,14 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.fragment_register.*
 import mx.itesm.tradefree.BaseFragment
 import mx.itesm.tradefree.Home.ActivityHome
+import mx.itesm.tradefree.Models.Product
+import mx.itesm.tradefree.Models.User
 
 import mx.itesm.tradefree.R
 
@@ -20,6 +25,7 @@ class FragmentRegister : BaseFragment(), View.OnClickListener {
 
     private lateinit var viewModelRegister: ViewModelRegister
     private lateinit var auth: FirebaseAuth
+    private lateinit var db: FirebaseDatabase
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,6 +41,9 @@ class FragmentRegister : BaseFragment(), View.OnClickListener {
         // Initialize Firebase Auth
         firebaseInit()
 
+        // Initialize Firebase Database
+        firebaseDatabaseInt()
+
         return root
     }
 
@@ -44,7 +53,6 @@ class FragmentRegister : BaseFragment(), View.OnClickListener {
         }
     }
 
-
     /**
      *  Firebase initialization.
      */
@@ -52,10 +60,21 @@ class FragmentRegister : BaseFragment(), View.OnClickListener {
         auth = FirebaseAuth.getInstance()
     }
 
+    /**
+     *  Firebase Database initialization.
+     */
+    private fun firebaseDatabaseInt() {
+        db = FirebaseDatabase.getInstance()
+    }
+
+    /**
+     *  This method creates a new user with an email and password.
+     */
     private fun signUpWithEmailPassword(email: String, password: String) {
         view?.let { hideKeyboard(it) }
         Log.d(TAG, "createAccount:$email")
         if (!validateForm()) {
+            Toast.makeText(activity, REGISTER_ERROR, Toast.LENGTH_LONG).show()
             return
         }
         showProgressDialog()
@@ -63,9 +82,7 @@ class FragmentRegister : BaseFragment(), View.OnClickListener {
             .addOnCompleteListener {
                 if (it.isSuccessful) {
                     Log.d(TAG, "createUserWithEmail:success")
-                    val intent = Intent(context, ActivityHome::class.java)
-                    startActivity(intent)
-                    activity?.finishAffinity()
+                    onAuthSuccess(it.result?.user!!)
                 } else {
                     Toast.makeText(activity, REGISTER_ERROR, Toast.LENGTH_LONG).show()
                 }
@@ -80,11 +97,41 @@ class FragmentRegister : BaseFragment(), View.OnClickListener {
      */
     private fun validateForm(): Boolean {
         var valid = true
+        val name = inputNameRegister.text.toString()
+        val lastName = inputLastNameRegister.toString()
         val email = inputEmailRegister.text.toString()
         val password = inputPasswordRegister.text.toString()
+        val retypePassword = inputRetypePasswordRegister.text.toString()
+        if (name.isEmpty()) valid = false
+        if (lastName.isEmpty()) valid = false
         if (email.isEmpty()) valid = false
         if (password.isEmpty()) valid = false
+        if (retypePassword.isEmpty()) valid = false
+        if (password != retypePassword) valid = false
         return valid
+    }
+
+    /**
+     *  This method is called if authentication success.
+     */
+    private fun onAuthSuccess(user: FirebaseUser) {
+        val name = inputNameRegister.text.toString()
+        val lastName = inputLastNameRegister.text.toString()
+        // Write new user
+        writeNewUser(user.uid, name + lastName, user.email)
+
+        // Go to MainActivity
+        val intent = Intent(context, ActivityHome::class.java)
+        startActivity(intent)
+        activity?.finishAffinity()
+    }
+
+    /**
+     *  This method creates a new user in the database.
+     */
+    private fun writeNewUser(userId: String, name: String, email: String?) {
+        val user = User(name, email!!, listOf())
+        db.reference.child("/users").child(userId).setValue(user)
     }
 
     companion object {
