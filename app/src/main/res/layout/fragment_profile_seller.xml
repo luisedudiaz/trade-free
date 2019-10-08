@@ -32,6 +32,7 @@
         app:layout_constraintTop_toBottomOf="@+id/txtNameProfileSeller" />
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView2"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="16dp"
@@ -43,11 +44,21 @@
         android:id="@+id/swComprador"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="80dp"
         android:layout_marginBottom="31dp"
         android:checked="true"
         android:text="Vendedor"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btnAgregar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:text="Agregar Producto"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/recyclerView2"
+        app:layout_constraintStart_toEndOf="@+id/swComprador" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
