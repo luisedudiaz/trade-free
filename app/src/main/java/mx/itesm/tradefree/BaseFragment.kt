@@ -6,8 +6,12 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.annotation.VisibleForTesting
 import androidx.fragment.app.Fragment
+import com.google.firebase.storage.FirebaseStorage
 
 open class BaseFragment: Fragment() {
+
+    private var storage: FirebaseStorage? = null
+
 
     @VisibleForTesting
     val progressDialog by lazy {
@@ -34,6 +38,14 @@ open class BaseFragment: Fragment() {
     override fun onStop() {
         super.onStop()
         hideProgressDialog()
+    }
+
+
+    /**
+     *  FirebaseStorage initialization.
+     */
+    fun firestorageInit() {
+        storage = FirebaseStorage.getInstance()
     }
 
 }

@@ -17,6 +17,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.storage.FirebaseStorage
 import mx.itesm.tradefree.Login.ActivityLogin
 import mx.itesm.tradefree.Profile.ActivityProfile
 
@@ -24,6 +25,7 @@ import mx.itesm.tradefree.Profile.ActivityProfile
 open class BaseActivity: AppCompatActivity() {
 
     protected var auth: FirebaseAuth? = null
+    private var storage: FirebaseStorage? = null
     private lateinit var googleSignInClient: GoogleSignInClient
 
     /**
@@ -79,6 +81,15 @@ open class BaseActivity: AppCompatActivity() {
     fun firebaseInit() {
         auth = FirebaseAuth.getInstance()
     }
+
+    /**
+     *  FirebaseStorage initialization.
+     */
+    fun firestorageInit() {
+        storage = FirebaseStorage.getInstance()
+    }
+
+
 
     /**
      *  Google Sign In Client
@@ -139,5 +150,7 @@ open class BaseActivity: AppCompatActivity() {
         super.onStop()
         hideProgressDialog()
     }
+
+
 
 }

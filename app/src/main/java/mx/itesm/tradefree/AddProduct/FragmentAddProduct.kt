@@ -1,5 +1,6 @@
 package mx.itesm.tradefree.AddProduct
 
+import android.app.ProgressDialog
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -29,5 +30,7 @@ class FragmentAddProduct : Fragment() {
         viewModel = ViewModelProviders.of(this).get(ViewModelAddProduct::class.java)
         // TODO: Use the ViewModel
     }
+
+
 
 }
