@@ -1,10 +1,10 @@
 package mx.itesm.tradefree.Register
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import mx.itesm.tradefree.BaseActivity
 import mx.itesm.tradefree.R
 
-class ActivityRegister : AppCompatActivity() {
+class ActivityRegister : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

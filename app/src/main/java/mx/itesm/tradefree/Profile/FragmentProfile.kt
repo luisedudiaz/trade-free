@@ -1,27 +1,17 @@
 package mx.itesm.tradefree.Profile
 
-import android.app.ProgressDialog
-import android.content.Intent
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import mx.itesm.tradefree.Profile.ActivityProfile
+import mx.itesm.tradefree.BaseFragment
 
 import mx.itesm.tradefree.R
 
-class FragmentProfile : Fragment() {
-
-    companion object {
-        fun newInstance() = FragmentProfile()
-    }
+class FragmentProfile : BaseFragment() {
 
     private lateinit var viewModelProfile: ViewModelProfile
-    private lateinit var dialog: ProgressDialog
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,14 +21,5 @@ class FragmentProfile : Fragment() {
         val root = inflater.inflate(R.layout.fragment_profile, container, false)
         return root
 
-    }
-
-    private fun mostrarDialogoEspera() {
-        this.dialog = ProgressDialog(context)
-        dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER)
-        dialog.setMessage("Descargando")
-        dialog.isIndeterminate = true
-        dialog.setCanceledOnTouchOutside(false)
-        dialog.show()
     }
 }

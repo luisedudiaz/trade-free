@@ -31,7 +31,7 @@ open class BaseFragment: Fragment() {
         imm.hideSoftInputFromWindow(view.windowToken, 0)
     }
 
-    public override fun onStop() {
+    override fun onStop() {
         super.onStop()
         hideProgressDialog()
     }
