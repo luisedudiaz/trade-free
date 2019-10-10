@@ -10,9 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.fragment_register.*
 import mx.itesm.tradefree.BaseFragment
 import mx.itesm.tradefree.Home.ActivityHome
@@ -25,8 +23,6 @@ import java.util.*
 class FragmentRegister : BaseFragment(), View.OnClickListener {
 
     private lateinit var viewModelRegister: ViewModelRegister
-    private lateinit var auth: FirebaseAuth
-    private lateinit var db: FirebaseDatabase
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,7 +39,7 @@ class FragmentRegister : BaseFragment(), View.OnClickListener {
         firebaseInit()
 
         // Initialize Firebase Database
-        firebaseDatabaseInt()
+        firebaseDatabaseInit()
 
         return root
     }
@@ -54,19 +50,6 @@ class FragmentRegister : BaseFragment(), View.OnClickListener {
         }
     }
 
-    /**
-     *  Firebase initialization.
-     */
-    private fun firebaseInit() {
-        auth = FirebaseAuth.getInstance()
-    }
-
-    /**
-     *  Firebase Database initialization.
-     */
-    private fun firebaseDatabaseInt() {
-        db = FirebaseDatabase.getInstance()
-    }
 
     /**
      *  This method creates a new user with an email and password.
@@ -79,16 +62,15 @@ class FragmentRegister : BaseFragment(), View.OnClickListener {
             return
         }
         showProgressDialog()
-        auth.createUserWithEmailAndPassword(email, password)
-            .addOnCompleteListener {
-                if (it.isSuccessful) {
-                    Log.d(TAG, "createUserWithEmail:success")
-                    onAuthSuccess(it.result?.user!!)
-                } else {
-                    Toast.makeText(activity, REGISTER_ERROR, Toast.LENGTH_LONG).show()
-                }
-                hideProgressDialog()
+        auth?.createUserWithEmailAndPassword(email, password)?.addOnCompleteListener {
+            if (it.isSuccessful) {
+                Log.d(TAG, "createUserWithEmail:success")
+                onAuthSuccess(it.result?.user!!)
+            } else {
+                Toast.makeText(activity, REGISTER_ERROR, Toast.LENGTH_LONG).show()
             }
+            hideProgressDialog()
+        }
     }
 
     /**
@@ -133,7 +115,7 @@ class FragmentRegister : BaseFragment(), View.OnClickListener {
     private fun writeNewUser(userId: String, name: String, email: String?) {
         val currentDate = getDate()
         val user = User(name, email!!,"buyer", currentDate, listOf())
-        db.reference.child("/users").child(userId).setValue(user)
+        db?.reference?.child("/users")?.child(userId)?.setValue(user)
     }
 
     /**
