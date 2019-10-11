@@ -32,13 +32,7 @@ import java.util.*
 
 class FragmentLogin : BaseFragment(), View.OnClickListener {
 
-
-
-    //spaces for the stash
-
     private lateinit var viewModelLogin: ViewModelLogin
-    private lateinit var auth: FirebaseAuth
-    private lateinit var db: FirebaseDatabase
     private lateinit var googleSignInClient: GoogleSignInClient
 
     override fun onCreateView(
@@ -55,7 +49,7 @@ class FragmentLogin : BaseFragment(), View.OnClickListener {
         btnRegister.setOnClickListener(this)
         btnLogin.setOnClickListener(this)
         btnGoogle.setOnClickListener(this)
-        //Someother stash try 
+
         // Google Sign In
         googleSignIn()
 
@@ -65,20 +59,19 @@ class FragmentLogin : BaseFragment(), View.OnClickListener {
         // Initialize Firebase Database
         firebaseDatabaseInit()
 
-
         return root
 
     }
 
     override fun onStart() {
         super.onStart()
-        val currentUser = auth.currentUser
+        val currentUser = auth?.currentUser
         Log.d("AUTH", currentUser?.email.toString())
     }
 
     override fun onResume() {
         showProgressDialog()
-        if (auth.currentUser != null) {
+        if (auth?.currentUser != null) {
             val intent = Intent(activity, ActivityHome::class.java)
             startActivity(intent)
         }
@@ -111,41 +104,15 @@ class FragmentLogin : BaseFragment(), View.OnClickListener {
     }
 
     /**
-     *  Firebase initialization.
-     */
-    private fun firebaseInit() {
-        auth = FirebaseAuth.getInstance()
-    }
-
-    /**
-     *  Firebase Database initialization.
-     */
-    private fun firebaseDatabaseInit() {
-        db = FirebaseDatabase.getInstance()
-    }
-
-    /**
-     *  Google signin configuration.
-     */
-    private fun googleSignIn() {
-        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(getString(R.string.default_web_client_id))
-            .requestEmail()
-            .build()
-        googleSignInClient = GoogleSignIn.getClient(requireActivity(), gso)
-    }
-
-    /**
      *  This method authenticates the user with google credentials.
      */
     private fun firebaseAuthWithGoogle(acct: GoogleSignInAccount) {
         Log.d(TAG, "firebaseAuthWithGoogle:" + acct.id!!)
         val credential = GoogleAuthProvider.getCredential(acct.idToken, null)
-        auth.signInWithCredential(credential)
-            .addOnCompleteListener {
+        auth?.signInWithCredential(credential)?.addOnCompleteListener {
                 if (it.isSuccessful) {
                     Log.d(TAG, "signInWithCredential:success")
-                    val user = auth.currentUser
+                    val user = auth?.currentUser
                     onAuthSuccess(user!!)
                 } else {
                     Log.w(TAG, "signInWithCredential:failure", it.exception)
@@ -170,8 +137,7 @@ class FragmentLogin : BaseFragment(), View.OnClickListener {
         }
         showProgressDialog()
         Log.d(TAG, email + password)
-        auth.signInWithEmailAndPassword(email, password)
-            .addOnCompleteListener {
+        auth?.signInWithEmailAndPassword(email, password)?.addOnCompleteListener {
                 if (it.isSuccessful) {
                     val intent = Intent(context, ActivityHome::class.java)
                     startActivity(intent)
@@ -238,7 +204,7 @@ class FragmentLogin : BaseFragment(), View.OnClickListener {
     private fun writeNewUser(userId: String, name: String, email: String?) {
         val currentDate = getDate()
         val user = User(name, email!!,"buyer", currentDate, emptyList())
-        db.reference.child("/users").child(userId).setValue(user)
+        db?.reference?.child("/users")?.child(userId)?.setValue(user)
     }
 
     /**
