@@ -8,32 +8,25 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.annotation.VisibleForTesting
 import androidx.fragment.app.Fragment
-<<<<<<< HEAD
-import com.google.firebase.storage.FirebaseStorage
-=======
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
->>>>>>> d5069462cb36ea594c5d928b3150cdc001920303
+import com.google.firebase.storage.FirebaseStorage
+
 
 @Suppress("DEPRECATION")
 open class BaseFragment: Fragment() {
 
-<<<<<<< HEAD
-    private var storage: FirebaseStorage? = null
-
-
-=======
     protected var auth: FirebaseAuth? = null
     protected var db: FirebaseDatabase? = null
+    protected var storage: FirebaseStorage? = null
     private lateinit var googleSignInClient: GoogleSignInClient
 
     /**
      *  Progress Dialog initialization.
      */
->>>>>>> d5069462cb36ea594c5d928b3150cdc001920303
     @VisibleForTesting
     val progressDialog by lazy {
         ProgressDialog(context)
@@ -71,6 +64,13 @@ open class BaseFragment: Fragment() {
     }
 
     /**
+     *  FirebaseStorage initialization.
+     */
+    fun firestorageInit() {
+        storage = FirebaseStorage.getInstance()
+    }
+
+    /**
      *  Google signin configuration.
      */
     fun googleSignIn() {
@@ -85,13 +85,5 @@ open class BaseFragment: Fragment() {
         super.onStop()
         hideProgressDialog()
     }
-
-
-    /**
-     *  FirebaseStorage initialization.
-     */
-    fun firestorageInit() {
-        storage = FirebaseStorage.getInstance()
-    }
-
+    
 }
