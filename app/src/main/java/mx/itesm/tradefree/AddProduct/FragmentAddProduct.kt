@@ -1,20 +1,15 @@
 package mx.itesm.tradefree.AddProduct
 
-import android.app.ProgressDialog
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import mx.itesm.tradefree.BaseFragment
 
 import mx.itesm.tradefree.R
 
-class FragmentAddProduct : Fragment() {
-
-    companion object {
-        fun newInstance() = FragmentAddProduct()
-    }
+class FragmentAddProduct : BaseFragment() {
 
     private lateinit var viewModel: ViewModelAddProduct
 

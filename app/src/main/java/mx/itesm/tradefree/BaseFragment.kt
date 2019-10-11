@@ -22,7 +22,7 @@ open class BaseFragment: Fragment() {
     protected var auth: FirebaseAuth? = null
     protected var db: FirebaseDatabase? = null
     protected var storage: FirebaseStorage? = null
-    private lateinit var googleSignInClient: GoogleSignInClient
+    protected var googleSignInClient: GoogleSignInClient? = null
 
     /**
      *  Progress Dialog initialization.

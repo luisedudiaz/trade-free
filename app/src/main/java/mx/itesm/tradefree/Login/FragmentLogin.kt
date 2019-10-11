@@ -33,7 +33,6 @@ import java.util.*
 class FragmentLogin : BaseFragment(), View.OnClickListener {
 
     private lateinit var viewModelLogin: ViewModelLogin
-    private lateinit var googleSignInClient: GoogleSignInClient
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -166,7 +165,7 @@ class FragmentLogin : BaseFragment(), View.OnClickListener {
      */
     private fun signInWithGoogle() {
         showProgressDialog()
-        val signInIntent = googleSignInClient.signInIntent
+        val signInIntent = googleSignInClient?.signInIntent
         startActivityForResult(signInIntent, RC_SIGN_IN)
     }
 
