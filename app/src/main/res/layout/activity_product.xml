@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Product.ActivityProduct">
+    tools:context=".view.product.ActivityProduct">
 
     <fragment
-        android:name="mx.itesm.tradefree.Product.FragmentProduct"
+        android:name="mx.itesm.tradefree.view.product.FragmentProduct"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Profile.FragmentProfile" >
+    tools:context=".view.profile.FragmentProfile" >
 
     <EditText
         android:id="@+id/inputNameProfile"

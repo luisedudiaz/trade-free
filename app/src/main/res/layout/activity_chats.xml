@@ -4,11 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Chats.ActivityChats">
+    tools:context=".view.chats.ActivityChats">
 
     <fragment
         android:id="@+id/fragmentChats"
-        android:name="mx.itesm.tradefree.Chats.FragmentChats"
+        android:name="mx.itesm.tradefree.view.chats.FragmentChats"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"

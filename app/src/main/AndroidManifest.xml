@@ -9,15 +9,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AddProduct.ActivityAddProduct"></activity>
-        <activity android:name=".Chat.ActivityChat" />
-        <activity android:name=".Chats.ActivityChats" />
-        <activity android:name=".ProfileSeller.ActivityProfileSeller" />
-        <activity android:name=".Profile.ActivityProfile" />
-        <activity android:name=".Product.ActivityProduct" />
-        <activity android:name=".Home.ActivityHome" />
-        <activity android:name=".Register.ActivityRegister" />
-        <activity android:name=".Login.ActivityLogin">
+        <activity android:name="mx.itesm.tradefree.view.addproduct.ActivityAddProduct"></activity>
+        <activity android:name="mx.itesm.tradefree.view.chat.ActivityChat" />
+        <activity android:name="mx.itesm.tradefree.view.chats.ActivityChats" />
+        <activity android:name="mx.itesm.tradefree.view.profileseller.ActivityProfileSeller" />
+        <activity android:name="mx.itesm.tradefree.view.profile.ActivityProfile" />
+        <activity android:name="mx.itesm.tradefree.view.product.ActivityProduct" />
+        <activity android:name="mx.itesm.tradefree.view.home.ActivityHome" />
+        <activity android:name="mx.itesm.tradefree.view.register.ActivityRegister" />
+        <activity android:name="mx.itesm.tradefree.view.login.ActivityLogin">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -4,11 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Login.ActivityLogin">
+    tools:context=".view.login.ActivityLogin">
 
     <fragment
         android:id="@+id/fragmentLogin"
-        android:name="mx.itesm.tradefree.Login.FragmentLogin"
+        android:name="mx.itesm.tradefree.view.login.FragmentLogin"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"

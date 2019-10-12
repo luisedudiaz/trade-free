@@ -4,11 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ProfileSeller.ActivityProfileSeller">
+    tools:context=".view.profileseller.ActivityProfileSeller">
 
     <fragment
         android:id="@+id/fragmentProfileSeller"
-        android:name="mx.itesm.tradefree.ProfileSeller.FragmentProfileSeller"
+        android:name="mx.itesm.tradefree.view.profileseller.FragmentProfileSeller"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
