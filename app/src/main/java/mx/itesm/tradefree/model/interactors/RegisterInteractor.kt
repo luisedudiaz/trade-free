@@ -10,6 +10,13 @@ import mx.itesm.tradefree.presenter.contracts.IRegisterContract
 
 class RegisterInteractor(private val onRegisterListener: IRegisterContract.onRegisterListener) : FirebaseManager(), IRegisterContract.Interactor {
 
+    /**
+     * This method creates the user with his email and password.
+     * @param activity  the current activity
+     * @param name      the user name retrieved from inputNameRegister and inputLastNameRegister
+     * @param email     the user email retrieved from inputEmailRegister
+     * @param password  the user password retrieved from inputPasswordlRegister
+     */
     override fun performFirebaseRegister(activity: Activity, name: String, password: String, email: String) {
         auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener {
             if (it.isSuccessful) {
