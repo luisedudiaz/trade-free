@@ -17,10 +17,10 @@ class LoginPresenter(private val loginView: ILoginContract.View): ILoginContract
         loginInteractor.performFirebaseLogin(activity, email, password)
     }
 
-    override fun loginWithGoogle(
-        activity: Activity,
-        account: GoogleSignInAccount?
-    ) {
+    /**
+     * This method sends the user account from the view to the presenter fot authentication.
+     */
+    override fun loginWithGoogle(activity: Activity, account: GoogleSignInAccount?) {
         loginInteractor.performFirebaseLoginWithGoogle(activity, account)
     }
 

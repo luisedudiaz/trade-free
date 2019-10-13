@@ -1,6 +1,5 @@
     package mx.itesm.tradefree.view.login
 
-    import android.annotation.SuppressLint
     import android.content.Intent
     import android.os.Bundle
     import android.util.Log
@@ -14,19 +13,14 @@
     import com.google.android.gms.auth.api.signin.GoogleSignInOptions
     import com.google.android.gms.common.SignInButton
     import com.google.android.gms.common.api.ApiException
-    import com.google.firebase.auth.FirebaseUser
     import kotlinx.android.synthetic.main.fragment_login.*
-    import mx.itesm.tradefree.view.base.BaseFragment
-    import mx.itesm.tradefree.view.home.ActivityHome
-    import mx.itesm.tradefree.model.models.User
     import mx.itesm.tradefree.R
     import mx.itesm.tradefree.model.utils.enums.Message
-    import mx.itesm.tradefree.view.register.ActivityRegister
     import mx.itesm.tradefree.presenter.contracts.ILoginContract
     import mx.itesm.tradefree.presenter.presenters.LoginPresenter
-    import java.text.SimpleDateFormat
-    import java.util.*
-
+    import mx.itesm.tradefree.view.base.BaseFragment
+    import mx.itesm.tradefree.view.home.ActivityHome
+    import mx.itesm.tradefree.view.register.ActivityRegister
 
     class FragmentLogin : BaseFragment(), View.OnClickListener, ILoginContract.View {
 

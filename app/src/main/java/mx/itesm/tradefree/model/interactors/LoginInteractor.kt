@@ -39,7 +39,7 @@ class LoginInteractor(private val onLoginListener: ILoginContract.onLoginListene
         auth.signInWithCredential(credential).addOnCompleteListener {
             if (it.isSuccessful) {
                 writeNewUser()
-                onLoginListener.onSuccess(Message.LOGIN.getMessageSuccess() + auth.currentUser?.email)
+                onLoginListener.onSuccess(Message.LOGIN.getMessageSuccess() + auth.currentUser?.displayName)
             } else {
                 onLoginListener.onFailure(Message.LOGIN.getMessageError())
             }
