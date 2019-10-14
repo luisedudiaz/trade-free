@@ -4,6 +4,9 @@ import android.app.Activity
 
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
 import mx.itesm.tradefree.model.models.User
 import mx.itesm.tradefree.model.utils.classes.Date
 import mx.itesm.tradefree.model.utils.classes.FirebaseManager
@@ -38,7 +41,26 @@ class LoginInteractor(private val onLoginListener: ILoginContract.onLoginListene
         val credential = GoogleAuthProvider.getCredential(account?.idToken, null)
         auth.signInWithCredential(credential).addOnCompleteListener {
             if (it.isSuccessful) {
-                writeNewUser()
+                db.reference.child("/users").addListenerForSingleValueEvent(object : ValueEventListener {
+                    override fun onCancelled(p0: DatabaseError) {
+                        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                    }
+
+                    override fun onDataChange(dataSnapshot: DataSnapshot) {
+                        var userExist: Boolean
+                        dataSnapshot.children.forEach {user->
+                            if (user.key == auth.currentUser?.uid.toString()) {
+                                userExist = true
+                                if (!userExist) {
+                                    writeNewUser()
+                                }
+                                return@forEach
+                            }
+                        }
+
+                    }
+
+                })
                 onLoginListener.onSuccess(Message.LOGIN.getMessageSuccess() + auth.currentUser?.displayName)
             } else {
                 onLoginListener.onFailure(Message.LOGIN.getMessageError())
