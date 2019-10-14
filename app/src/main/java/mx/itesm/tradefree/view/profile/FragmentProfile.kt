@@ -6,17 +6,14 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.CompoundButton
-import android.widget.Switch
-import android.widget.Toast
-import mx.itesm.tradefree.view.addproduct.ActivityAddProduct
-import mx.itesm.tradefree.view.base.BaseFragment
-
+import android.widget.*
 import mx.itesm.tradefree.R
+import mx.itesm.tradefree.model.models.User
 import mx.itesm.tradefree.model.utils.enums.UserType
 import mx.itesm.tradefree.presenter.contracts.IProfileContract
 import mx.itesm.tradefree.presenter.presenters.ProfilePresenter
+import mx.itesm.tradefree.view.addproduct.ActivityAddProduct
+import mx.itesm.tradefree.view.base.BaseFragment
 
 class FragmentProfile : BaseFragment(), View.OnClickListener,
     CompoundButton.OnCheckedChangeListener, IProfileContract.View{
@@ -25,6 +22,8 @@ class FragmentProfile : BaseFragment(), View.OnClickListener,
     private lateinit var root: View
     private lateinit var btnAddProduct: Button
     private lateinit var switch: Switch
+    private lateinit var inputNameProfile: EditText
+    private lateinit var inputEmailProfile: EditText
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,6 +31,8 @@ class FragmentProfile : BaseFragment(), View.OnClickListener,
     ): View? {
         root = inflater.inflate(R.layout.fragment_profile, container, false)
         initViews()
+        showProgressDialog()
+        getUserData()
         return root
     }
 
@@ -47,12 +48,20 @@ class FragmentProfile : BaseFragment(), View.OnClickListener,
         }
     }
 
-    override fun onDataProfileSuccess(message: String) {
+    override fun onTypeProfileSuccess(message: String) {
         Toast.makeText(activity, message, Toast.LENGTH_LONG).show()
     }
 
-    override fun onDataProfileFailure(message: String) {
+    override fun onTypeProfileFailure(message: String) {
         Toast.makeText(activity, message, Toast.LENGTH_LONG).show()
+    }
+
+    override fun onDataProfileSuccess(user: User) {
+        inputNameProfile.setText(user.name)
+        inputEmailProfile.setText(user.email)
+        switch.isChecked = user.type == UserType.SELLER
+        switch.setOnCheckedChangeListener(this)
+        hideProgressDialog()
     }
 
     private fun changeTypeUser(active: Boolean) {
@@ -66,17 +75,31 @@ class FragmentProfile : BaseFragment(), View.OnClickListener,
      */
     private fun initViews() {
         profilePresenter = ProfilePresenter(this)
+        // Inputs
+        inputNameProfile = root.findViewById(R.id.inputNameProfile)
+        inputEmailProfile = root.findViewById(R.id.inputEmailProfile)
         //Buttons
         btnAddProduct = root.findViewById(R.id.btnAddProductProfile)
         switch = root.findViewById(R.id.swTypeUser)
         // ButtonsListerners
         btnAddProduct.setOnClickListener(this)
-        switch.setOnCheckedChangeListener(this)
     }
 
+
+    /**
+     * This method gets the user information from database
+     */
+    private fun getUserData() {
+        profilePresenter.getUserInfo()
+    }
+
+    /**
+     * This method send to add product activity.
+     */
     private fun goToAddProduct() {
         val intent= Intent(context, ActivityAddProduct::class.java)
         startActivity(intent)
+        activity?.finish()
     }
 
 }

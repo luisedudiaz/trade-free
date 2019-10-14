@@ -90,6 +90,7 @@ open class BaseActivity: AppCompatActivity(), ILogoutContract {
         showProgressDialog()
         val intent = Intent(this, ActivityProfile::class.java)
         startActivity(intent)
+        finish()
         hideProgressDialog()
         return true
     }

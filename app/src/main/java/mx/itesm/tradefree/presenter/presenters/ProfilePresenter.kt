@@ -18,14 +18,18 @@ class ProfilePresenter(private val profileView: IProfileContract.View): IProfile
     }
 
     override fun getUserInfo() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        profileInteractor.getUserInfo()
+    }
+
+    override fun onDataSuccess(user: User) {
+        profileView.onDataProfileSuccess(user)
     }
 
     override fun onSuccess(message: String) {
-        profileView.onDataProfileSuccess(message)
+        profileView.onTypeProfileSuccess(message)
     }
 
     override fun onFailure(message: String) {
-        profileView.onDataProfileFailure(message)
+        profileView.onTypeProfileFailure(message)
     }
 }

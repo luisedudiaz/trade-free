@@ -14,7 +14,5 @@ enum class Message : IMessage {
     PROFILE_TYPE {
         override fun getMessageSuccess(): String = "Has cambiado tu tipo de usuario a "
         override fun getMessageError(): String = "No pudimos cambiar tu tipo de usuario correctamente."
-
-
     }
 }

@@ -6,8 +6,9 @@ import mx.itesm.tradefree.model.utils.enums.UserType
 
 interface IProfileContract {
     interface View {
-        fun onDataProfileSuccess(message: String)
-        fun onDataProfileFailure(message: String)
+        fun onTypeProfileSuccess(message: String)
+        fun onTypeProfileFailure(message: String)
+        fun onDataProfileSuccess(user: User)
     }
 
     interface Presenter {
@@ -25,5 +26,6 @@ interface IProfileContract {
     interface onProfileListener {
         fun onSuccess(message: String)
         fun onFailure(message: String)
+        fun onDataSuccess(user: User)
     }
 }
