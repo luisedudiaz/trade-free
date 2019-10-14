@@ -10,5 +10,11 @@ enum class Message : IMessage {
     REGISTER {
         override fun getMessageSuccess() = "Bienvenido "
         override fun getMessageError() = "Ingrese correctamente sus datos."
+    },
+    PROFILE_TYPE {
+        override fun getMessageSuccess(): String = "Has cambiado tu tipo de usuario a "
+        override fun getMessageError(): String = "No pudimos cambiar tu tipo de usuario correctamente."
+
+
     }
 }

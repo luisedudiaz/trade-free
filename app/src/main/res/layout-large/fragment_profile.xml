@@ -44,7 +44,7 @@
         app:layout_constraintTop_toBottomOf="@+id/inputEmailProfile2">
 
         <Switch
-            android:id="@+id/swIsSeller"
+            android:id="@+id/swTypeUser"
             android:layout_width="176dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
