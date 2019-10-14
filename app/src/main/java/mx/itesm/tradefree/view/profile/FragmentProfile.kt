@@ -64,6 +64,9 @@ class FragmentProfile : BaseFragment(), View.OnClickListener,
         hideProgressDialog()
     }
 
+    /**
+     * This method call updateTypeUser to change it in the database.
+     */
     private fun changeTypeUser(active: Boolean) {
         Log.d("ACTIVE", active.toString())
         if (active) activity?.let { profilePresenter.updateTypeUser(it, UserType.SELLER) }

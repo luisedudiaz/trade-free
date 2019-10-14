@@ -14,6 +14,12 @@ import com.google.firebase.database.DataSnapshot
 
 class ProfileInteractor(private val profileInteractor: IProfileContract.onProfileListener): FirebaseManager(), IProfileContract.Interactor {
 
+    /**
+     * This method update the user type.
+     * @param activity  the current activity
+     * @param userType  the user selection
+     *
+     */
     override fun performUpdateTypeUser(activity: Activity, userType: UserType) {
         val uid = auth.currentUser?.uid
         db.reference.child("/users/$uid").child("type").setValue(userType).addOnCompleteListener {
@@ -25,10 +31,19 @@ class ProfileInteractor(private val profileInteractor: IProfileContract.onProfil
         }
     }
 
+    /**
+     * This method update the user type.
+     * @param activity  the current activity
+     * @param user      the user model to update
+     *
+     */
     override fun performUpdateUserInfo(activity: Activity, user: User) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
+    /**
+     * This method return the user information.
+     */
     override fun getUserInfo() {
         val uid = auth.currentUser?.uid
         db.reference.child("users/$uid").addListenerForSingleValueEvent(object : ValueEventListener {
