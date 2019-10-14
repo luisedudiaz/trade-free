@@ -12,22 +12,18 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.storage.FirebaseStorage
 import mx.itesm.tradefree.view.login.ActivityLogin
 import mx.itesm.tradefree.view.profile.ActivityProfile
 import mx.itesm.tradefree.R
+import mx.itesm.tradefree.presenter.contracts.ILogoutContract
+import mx.itesm.tradefree.presenter.presenters.LogoutPresenter
 
 @SuppressLint("Registered")
-open class BaseActivity: AppCompatActivity() {
+open class BaseActivity: AppCompatActivity(), ILogoutContract {
 
-    protected var auth: FirebaseAuth? = null
-    private var storage: FirebaseStorage? = null
-    private lateinit var googleSignInClient: GoogleSignInClient
+    private val logoutPresenter: LogoutPresenter
+        get() = LogoutPresenter()
 
     /**
      *  Progress Dialog initialization.
@@ -39,7 +35,7 @@ open class BaseActivity: AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.settings_menu, menu)
-        return auth?.currentUser != null
+        return logoutPresenter.isAuthenticated()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -77,33 +73,6 @@ open class BaseActivity: AppCompatActivity() {
     }
 
     /**
-     *  Firebase initialization.
-     */
-    fun firebaseInit() {
-        auth = FirebaseAuth.getInstance()
-    }
-
-    /**
-     *  FirebaseStorage initialization.
-     */
-    fun firestorageInit() {
-        storage = FirebaseStorage.getInstance()
-    }
-
-
-
-    /**
-     *  Google Sign In Client
-     */
-    fun googleSignIn() {
-        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(getString(R.string.default_web_client_id))
-            .requestEmail()
-            .build()
-        googleSignInClient = GoogleSignIn.getClient(this, gso)
-    }
-
-    /**
      *  Add click event to the messages button.
      */
     fun setOnClickListenerFloatingButton(fabMessage: View) {
@@ -132,7 +101,7 @@ open class BaseActivity: AppCompatActivity() {
     private fun goToLogin(): Boolean {
         showProgressDialog()
         val intent = Intent(this, ActivityLogin::class.java)
-        auth?.let { signOut(it, googleSignInClient) }
+        signOut()
         startActivity(intent)
         hideProgressDialog()
         return true
@@ -141,17 +110,13 @@ open class BaseActivity: AppCompatActivity() {
     /**
      *  This method ends the user session.
      */
-    private fun signOut(auth: FirebaseAuth, googleSignInClient: GoogleSignInClient) {
+    private fun signOut() {
+        logoutPresenter.signout(this)
         finishAffinity()
-        auth.signOut()
-        googleSignInClient.signOut()
     }
 
     public override fun onStop() {
         super.onStop()
         hideProgressDialog()
     }
-
-
-
 }

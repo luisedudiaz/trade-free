@@ -10,13 +10,6 @@ class ActivityProfileSeller : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile_seller)
-
-        // Google Sign In
-        googleSignIn()
-
-        // Initialize Firebase Auth.
-        firebaseInit()
-
         // Initialize Floating Button
         setOnClickListenerFloatingButton(findViewById(R.id.fabMessage))
     }
