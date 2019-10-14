@@ -4,6 +4,7 @@ import android.os.Bundle
 import mx.itesm.tradefree.view.base.BaseActivity
 import mx.itesm.tradefree.R
 
+
 class ActivityProfile : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
