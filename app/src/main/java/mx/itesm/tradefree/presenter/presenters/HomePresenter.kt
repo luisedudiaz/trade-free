@@ -13,6 +13,7 @@ class HomePresenter(private val homeView: IHomeContract.View): IHomeContract.Pre
     }
 
     override fun onSuccess(product: Product) {
+        homeView.onDataSuccess(product)
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 

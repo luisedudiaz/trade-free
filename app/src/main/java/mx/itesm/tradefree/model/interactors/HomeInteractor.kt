@@ -19,6 +19,7 @@ class HomeInteractor(private val homeInteractor: IHomeContract.onHomeListener): 
                 if (dataSnapshot.exists()) {
                     dataSnapshot.children.forEach {
                         Log.d("PRODUCTS", it.toString())
+                        //homeInteractor.onSuccess(it)
                     }
                 }
             }
