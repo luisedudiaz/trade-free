@@ -20,6 +20,7 @@ class HomeInteractor(private val homeInteractor: IHomeContract.onHomeListener): 
                     dataSnapshot.children.forEach {
                         Log.d("PRODUCTS", it.toString())
                         //homeInteractor.onSuccess(it)
+                        // SOmething
                     }
                 }
             }
