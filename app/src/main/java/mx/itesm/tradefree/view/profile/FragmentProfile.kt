@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import kotlinx.android.synthetic.main.fragment_profile.*
 import mx.itesm.tradefree.R
 import mx.itesm.tradefree.model.models.User
 import mx.itesm.tradefree.model.utils.enums.UserType
@@ -103,6 +104,12 @@ class FragmentProfile : BaseFragment(), View.OnClickListener,
         val intent= Intent(context, ActivityAddProduct::class.java)
         startActivity(intent)
         activity?.finish()
+        visible_action(this)
+    }
+
+    private fun visible_action(v: FragmentProfile){
+        btnAddProductProfile.visibility = View.VISIBLE
+
     }
 
 }
