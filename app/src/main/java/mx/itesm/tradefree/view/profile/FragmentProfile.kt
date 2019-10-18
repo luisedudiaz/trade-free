@@ -25,6 +25,8 @@ class FragmentProfile : BaseFragment(), View.OnClickListener,
     private lateinit var switch: Switch
     private lateinit var inputNameProfile: EditText
     private lateinit var inputEmailProfile: EditText
+    private lateinit var buttonAddProduct: Button
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -70,8 +72,14 @@ class FragmentProfile : BaseFragment(), View.OnClickListener,
      */
     private fun changeTypeUser(active: Boolean) {
         Log.d("ACTIVE", active.toString())
-        if (active) activity?.let { profilePresenter.updateTypeUser(it, UserType.SELLER) }
+        if (active) activity?.let {
+            profilePresenter.updateTypeUser(it, UserType.SELLER)
+            btnAddProduct.visibility = View.VISIBLE
+            changeVisible(this)
+        }
         else activity?.let { profilePresenter.updateTypeUser(it, UserType.BUYER) }
+
+
     }
 
     /**
@@ -85,6 +93,7 @@ class FragmentProfile : BaseFragment(), View.OnClickListener,
         //Buttons
         btnAddProduct = root.findViewById(R.id.btnAddProductProfile)
         switch = root.findViewById(R.id.swTypeUser)
+        buttonAddProduct = root.findViewById(R.id.btnAddProductProfile)
         // ButtonsListerners
         btnAddProduct.setOnClickListener(this)
     }
@@ -104,12 +113,10 @@ class FragmentProfile : BaseFragment(), View.OnClickListener,
         val intent= Intent(context, ActivityAddProduct::class.java)
         startActivity(intent)
         activity?.finish()
-        visible_action(this)
+
     }
-
-    private fun visible_action(v: FragmentProfile){
-        btnAddProductProfile.visibility = View.VISIBLE
-
+    private fun changeVisible(view: FragmentProfile){
+        btnAddProduct.visibility = View.VISIBLE
     }
 
 }
