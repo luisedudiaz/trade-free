@@ -9,13 +9,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="mx.itesm.tradefree.view.login.ActivityLogin">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
         <activity android:name="mx.itesm.tradefree.view.chat.ActivityChat" />
         <activity android:name="mx.itesm.tradefree.view.chats.ActivityChats" />
         <activity android:name="mx.itesm.tradefree.view.profileseller.ActivityProfileSeller" />
@@ -23,8 +16,13 @@
         <activity android:name="mx.itesm.tradefree.view.addproduct.ActivityAddProduct" />
         <activity android:name="mx.itesm.tradefree.view.product.ActivityProduct" />
         <activity android:name="mx.itesm.tradefree.view.home.ActivityHome" />
-        <activity android:name="mx.itesm.tradefree.view.register.ActivityRegister" >
+        <activity android:name="mx.itesm.tradefree.view.register.ActivityRegister" />
+        <activity android:name="mx.itesm.tradefree.view.login.ActivityLogin">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
 

@@ -1,6 +1,7 @@
 package mx.itesm.tradefree.model.interactors
 
 import android.app.Activity
+import android.util.Log
 
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.firebase.auth.GoogleAuthProvider
@@ -47,17 +48,16 @@ class LoginInteractor(private val onLoginListener: ILoginContract.onLoginListene
                     }
 
                     override fun onDataChange(dataSnapshot: DataSnapshot) {
-                        var userExist: Boolean
+                        var userExist = false
                         dataSnapshot.children.forEach {user->
                             if (user.key == auth.currentUser?.uid.toString()) {
                                 userExist = true
-                                if (!userExist) {
-                                    writeNewUser()
-                                }
                                 return@forEach
                             }
                         }
-
+                        if (!userExist) {
+                            writeNewUser()
+                        }
                     }
 
                 })
@@ -87,7 +87,7 @@ class LoginInteractor(private val onLoginListener: ILoginContract.onLoginListene
         val email = auth.currentUser?.email.toString()
         val currentDate = Date().getDate()
         val userType = UserType.BUYER
-        val user = User(name, email, userType, currentDate, emptyList())
+        val user = User(name, email, userType, currentDate, mutableListOf())
         if (userId != null) {
             db.reference.child("/users").child(userId).setValue(user)
         }

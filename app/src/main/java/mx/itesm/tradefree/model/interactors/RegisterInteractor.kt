@@ -36,7 +36,7 @@ class RegisterInteractor(private val onRegisterListener: IRegisterContract.onReg
         val email = auth.currentUser?.email.toString()
         val currentDate = Date().getDate()
         val userType = UserType.BUYER
-        val user = User(name, email, userType, currentDate, emptyList())
+        val user = User(name, email, userType, currentDate, mutableListOf())
         if (userId != null) {
             db.reference.child("/users").child(userId).setValue(user)
         }

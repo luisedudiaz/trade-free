@@ -10,6 +10,7 @@ import mx.itesm.tradefree.model.utils.enums.UserType
 import mx.itesm.tradefree.presenter.contracts.IProfileContract
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DataSnapshot
+import mx.itesm.tradefree.model.utils.classes.Email
 
 
 class ProfileInteractor(private val profileInteractor: IProfileContract.onProfileListener): FirebaseManager(), IProfileContract.Interactor {
@@ -38,7 +39,30 @@ class ProfileInteractor(private val profileInteractor: IProfileContract.onProfil
      *
      */
     override fun performUpdateUserInfo(activity: Activity, user: User) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val uid = auth.currentUser?.uid
+        if (user.name.isNotBlank()) {
+            db.reference.child("/users/$uid").child("name").setValue(user.name).addOnCompleteListener {
+                if (it.isSuccessful) {
+                    profileInteractor.onProfileUpdateSuccess("${Message.PROFILE_DATA.getMessageSuccess()}nombre por ${user.name}")
+                } else {
+                    profileInteractor.onProfileUpdateFailure(Message.PROFILE_DATA.getMessageError())
+                }
+            }
+        }
+        if (user.email.isNotBlank()) {
+            if (Email().isEmailValid(user.email)) {
+                db.reference.child("/users/$uid").child("email").setValue(user.email)
+                    .addOnCompleteListener {
+                        if (it.isSuccessful) {
+                            profileInteractor.onProfileUpdateSuccess("${Message.PROFILE_DATA.getMessageSuccess()}correo por ${user.email}")
+                        } else {
+                            profileInteractor.onProfileUpdateFailure(Message.PROFILE_DATA.getMessageError())
+                        }
+                    }
+            } else {
+                profileInteractor.onProfileUpdateFailure(Message.PROFILE_DATA.getMessageError())
+            }
+        }
     }
 
     /**
@@ -58,4 +82,6 @@ class ProfileInteractor(private val profileInteractor: IProfileContract.onProfil
             }
         })
     }
+
+
 }

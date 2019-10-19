@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.fragment_profile.*
 import mx.itesm.tradefree.R
 import mx.itesm.tradefree.model.models.User
@@ -26,7 +27,8 @@ class FragmentProfile : BaseFragment(), View.OnClickListener,
     private lateinit var inputNameProfile: EditText
     private lateinit var inputEmailProfile: EditText
     private lateinit var buttonAddProduct: Button
-
+    private lateinit var recyclerViewProducts: RecyclerView
+    private lateinit var btnUpdateUserData: Button
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,6 +44,7 @@ class FragmentProfile : BaseFragment(), View.OnClickListener,
     override fun onClick(v: View?) {
         when(v?.id){
             R.id.btnAddProductProfile -> goToAddProduct()
+            R.id.btnUpdateUserProfile -> updateUserProfile()
         }
     }
 
@@ -63,25 +66,36 @@ class FragmentProfile : BaseFragment(), View.OnClickListener,
         inputNameProfile.setText(user.name)
         inputEmailProfile.setText(user.email)
         switch.isChecked = user.type == UserType.SELLER
+        btnAddProduct.visibility = if (user.type == UserType.SELLER) View.VISIBLE else View.INVISIBLE
+        recyclerViewProducts.visibility = if (user.type == UserType.SELLER) View.VISIBLE else View.INVISIBLE
         switch.setOnCheckedChangeListener(this)
         hideProgressDialog()
     }
+
+    override fun onProfileUpdateSuccess(message: String) {
+        Toast.makeText(activity, message, Toast.LENGTH_LONG).show()
+    }
+
+    override fun onProfileUpdateFailure(message: String) {
+        Toast.makeText(activity, message, Toast.LENGTH_LONG).show()
+    }
+
 
     /**
      * This method call updateTypeUser to change it in the database.
      */
     private fun changeTypeUser(active: Boolean) {
         Log.d("ACTIVE", active.toString())
-        if (active) activity?.let {
-            profilePresenter.updateTypeUser(it, UserType.SELLER)
+        if (active) {
+            activity?.let { profilePresenter.updateTypeUser(it, UserType.SELLER) }
             btnAddProduct.visibility = View.VISIBLE
-            changeVisible(this)
+            recyclerViewProducts.visibility = View.VISIBLE
+        } else {
+            activity?.let { profilePresenter.updateTypeUser(it, UserType.BUYER) }
+            btnAddProduct.visibility = View.GONE
+            recyclerViewProducts.visibility = View.GONE
         }
-        else activity?.let { profilePresenter.updateTypeUser(it, UserType.BUYER) }
-
-
     }
-
     /**
      * Initialize view components
      */
@@ -94,8 +108,12 @@ class FragmentProfile : BaseFragment(), View.OnClickListener,
         btnAddProduct = root.findViewById(R.id.btnAddProductProfile)
         switch = root.findViewById(R.id.swTypeUser)
         buttonAddProduct = root.findViewById(R.id.btnAddProductProfile)
+        btnUpdateUserData = root.findViewById(R.id.btnUpdateUserProfile)
+        // RecyclerView
+        recyclerViewProducts = root.findViewById(R.id.recyclerViewProductProfile)
         // ButtonsListerners
         btnAddProduct.setOnClickListener(this)
+        btnUpdateUserData.setOnClickListener(this)
     }
 
 
@@ -112,11 +130,14 @@ class FragmentProfile : BaseFragment(), View.OnClickListener,
     private fun goToAddProduct() {
         val intent= Intent(context, ActivityAddProduct::class.java)
         startActivity(intent)
-        activity?.finish()
-
     }
-    private fun changeVisible(view: FragmentProfile){
-        btnAddProduct.visibility = View.VISIBLE
+
+    /**
+     * This method update the email or name of the user
+     */
+    private fun updateUserProfile() {
+        val user = User(inputNameProfile.text.toString(), inputEmailProfile.text.toString())
+        activity?.let { profilePresenter.updateUserInfo(it, user) }
     }
 
 }

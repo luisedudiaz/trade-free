@@ -9,6 +9,8 @@ interface IProfileContract {
         fun onTypeProfileSuccess(message: String)
         fun onTypeProfileFailure(message: String)
         fun onDataProfileSuccess(user: User)
+        fun onProfileUpdateSuccess(message: String)
+        fun onProfileUpdateFailure(message: String)
     }
 
     interface Presenter {
@@ -27,5 +29,7 @@ interface IProfileContract {
         fun onSuccess(message: String)
         fun onFailure(message: String)
         fun onDataSuccess(user: User)
+        fun onProfileUpdateSuccess(message: String)
+        fun onProfileUpdateFailure(message: String)
     }
 }

@@ -8,6 +8,7 @@ import mx.itesm.tradefree.presenter.contracts.IProfileContract
 
 class ProfilePresenter(private val profileView: IProfileContract.View): IProfileContract.Presenter, IProfileContract.onProfileListener {
 
+
     private val profileInteractor: ProfileInteractor = ProfileInteractor(this)
 
     /**
@@ -21,7 +22,7 @@ class ProfilePresenter(private val profileView: IProfileContract.View): IProfile
      * This method sends the user information.
      */
     override fun updateUserInfo(activity: Activity, user: User) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        profileInteractor.performUpdateUserInfo(activity, user)
     }
 
     /**
@@ -50,5 +51,13 @@ class ProfilePresenter(private val profileView: IProfileContract.View): IProfile
      */
     override fun onFailure(message: String) {
         profileView.onTypeProfileFailure(message)
+    }
+
+    override fun onProfileUpdateSuccess(message: String) {
+        profileView.onProfileUpdateSuccess(message)
+    }
+
+    override fun onProfileUpdateFailure(message: String) {
+        profileView.onProfileUpdateFailure(message)
     }
 }

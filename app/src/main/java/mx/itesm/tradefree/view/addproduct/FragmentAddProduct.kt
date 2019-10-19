@@ -10,19 +10,23 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.TextView
 import com.synnapps.carouselview.CarouselView
 import com.synnapps.carouselview.ImageListener
+import mx.itesm.tradefree.R
+import mx.itesm.tradefree.presenter.contracts.IAddProductContract
+import mx.itesm.tradefree.presenter.presenters.AddProductPresenter
 import mx.itesm.tradefree.view.base.BaseFragment
 
-import mx.itesm.tradefree.R
 
-
-class FragmentAddProduct : BaseFragment(), View.OnClickListener, ImageListener {
-
+class FragmentAddProduct : BaseFragment(), View.OnClickListener, ImageListener,
+    IAddProductContract.View {
 
     private lateinit var root: View
+    private lateinit var addProductPresenter: AddProductPresenter
     private lateinit var carouselView: CarouselView
     private lateinit var btnUploadImages: Button
+    private lateinit var btnUploadProduct: Button
 
     private lateinit var carouselImages: MutableList<Uri>
 
@@ -62,6 +66,7 @@ class FragmentAddProduct : BaseFragment(), View.OnClickListener, ImageListener {
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.btnAddImagesProduct -> addMultipleImages()
+            R.id.btnAddProduct -> createProduct()
         }
     }
 
@@ -74,6 +79,15 @@ class FragmentAddProduct : BaseFragment(), View.OnClickListener, ImageListener {
         }
     }
 
+    override fun onDataSuccess(message: String) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun onDataFailure(message: String) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+
     private fun addMultipleImages() {
         val intent = Intent(Intent.ACTION_GET_CONTENT)
         intent.type = "image/*"
@@ -81,16 +95,24 @@ class FragmentAddProduct : BaseFragment(), View.OnClickListener, ImageListener {
         startActivityForResult(intent, PICK_IMG)
     }
 
+    private fun createProduct() {
+        val inputNameProduct : TextView = root.findViewById(R.id.inputNameProduct)
+        val inputDescriptionProduct: TextView = root.findViewById(R.id.inputDescriptionProduct)
+        addProductPresenter.createProduct(inputNameProduct.text.toString(), inputDescriptionProduct.text.toString(), carouselImages)
+    }
 
     private fun initView() {
+        addProductPresenter = AddProductPresenter(this)
         // View
         carouselView = root.findViewById(R.id.carouselView)
         // Buttons
         btnUploadImages = root.findViewById(R.id.btnAddImagesProduct)
+        btnUploadProduct = root.findViewById(R.id.btnAddProduct)
         // Array
         carouselImages = mutableListOf()
         // ButtonsListeners
         btnUploadImages.setOnClickListener(this)
+        btnUploadProduct.setOnClickListener(this)
         // CarouselViewListeners
         carouselView.pageCount = PICK_IMG
         carouselView.setImageListener(this)

@@ -12,8 +12,10 @@ import mx.itesm.tradefree.presenter.contracts.IHomeContract
 import mx.itesm.tradefree.presenter.presenters.HomePresenter
 
 class FragmentHome : BaseFragment(), IHomeContract.View {
-   private lateinit var homePresenter: HomePresenter
+
+    private lateinit var homePresenter: HomePresenter
     private lateinit var root: View
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
