@@ -1,7 +1,7 @@
 package mx.itesm.tradefree.model.interactors
 
 import android.app.Activity
-import mx.itesm.tradefree.model.models.User
+import mx.itesm.tradefree.model.models.User.User
 import mx.itesm.tradefree.model.utils.classes.Date
 import mx.itesm.tradefree.model.utils.classes.FirebaseManager
 import mx.itesm.tradefree.model.utils.enums.Message
@@ -36,7 +36,13 @@ class RegisterInteractor(private val onRegisterListener: IRegisterContract.onReg
         val email = auth.currentUser?.email.toString()
         val currentDate = Date().getDate()
         val userType = UserType.BUYER
-        val user = User(name, email, userType, currentDate, mutableListOf())
+        val user = User(
+            name,
+            email,
+            userType,
+            currentDate,
+            mutableListOf()
+        )
         if (userId != null) {
             db.reference.child("/users").child(userId).setValue(user)
         }

@@ -1,9 +1,8 @@
 package mx.itesm.tradefree.model.interactors
 
 import android.app.Activity
-import android.util.Log
 import com.google.firebase.database.ValueEventListener
-import mx.itesm.tradefree.model.models.User
+import mx.itesm.tradefree.model.models.User.User
 import mx.itesm.tradefree.model.utils.classes.FirebaseManager
 import mx.itesm.tradefree.model.utils.enums.Message
 import mx.itesm.tradefree.model.utils.enums.UserType

@@ -18,5 +18,9 @@ enum class Message : IMessage {
     PROFILE_DATA {
         override fun getMessageSuccess(): String = "Has cambiado tu "
         override fun getMessageError(): String = "No se pudo realizar la actualización de tus datos."
+    },
+    ADD_PRODUCT {
+        override fun getMessageSuccess(): String = "Tu producto se ha agregado correctamente."
+        override fun getMessageError(): String = "No se pudo agregar producto."
     }
 }

@@ -10,7 +10,7 @@ import mx.itesm.tradefree.presenter.presenters.HomePresenter
 
 class HomeInteractor(private val homeInteractor: IHomeContract.onHomeListener):  FirebaseManager(), IHomeContract.Interactor {
     override fun getProducts() {
-        db.reference.child("/products").addValueEventListener(object : ValueEventListener {
+        db.reference.child("/userProducts").addValueEventListener(object : ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {
                 TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
             }

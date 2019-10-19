@@ -1,7 +1,7 @@
 package mx.itesm.tradefree.presenter.presenters
 
 import mx.itesm.tradefree.model.interactors.HomeInteractor
-import mx.itesm.tradefree.model.models.Product
+import mx.itesm.tradefree.model.models.User.UserProduct
 import mx.itesm.tradefree.presenter.contracts.IHomeContract
 
 class HomePresenter(private val homeView: IHomeContract.View): IHomeContract.Presenter, IHomeContract.onHomeListener {
@@ -12,8 +12,8 @@ class HomePresenter(private val homeView: IHomeContract.View): IHomeContract.Pre
         homeInteractor.getProducts()
     }
 
-    override fun onSuccess(product: Product) {
-        homeView.onDataSuccess(product)
+    override fun onSuccess(userProduct: UserProduct) {
+        homeView.onDataSuccess(userProduct)
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 

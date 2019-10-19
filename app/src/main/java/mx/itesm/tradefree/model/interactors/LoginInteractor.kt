@@ -1,14 +1,13 @@
 package mx.itesm.tradefree.model.interactors
 
 import android.app.Activity
-import android.util.Log
 
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
-import mx.itesm.tradefree.model.models.User
+import mx.itesm.tradefree.model.models.User.User
 import mx.itesm.tradefree.model.utils.classes.Date
 import mx.itesm.tradefree.model.utils.classes.FirebaseManager
 import mx.itesm.tradefree.model.utils.enums.Message
@@ -87,7 +86,13 @@ class LoginInteractor(private val onLoginListener: ILoginContract.onLoginListene
         val email = auth.currentUser?.email.toString()
         val currentDate = Date().getDate()
         val userType = UserType.BUYER
-        val user = User(name, email, userType, currentDate, mutableListOf())
+        val user = User(
+            name,
+            email,
+            userType,
+            currentDate,
+            mutableListOf()
+        )
         if (userId != null) {
             db.reference.child("/users").child(userId).setValue(user)
         }

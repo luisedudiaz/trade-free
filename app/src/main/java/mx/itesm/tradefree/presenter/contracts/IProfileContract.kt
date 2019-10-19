@@ -1,7 +1,7 @@
 package mx.itesm.tradefree.presenter.contracts
 
 import android.app.Activity
-import mx.itesm.tradefree.model.models.User
+import mx.itesm.tradefree.model.models.User.User
 import mx.itesm.tradefree.model.utils.enums.UserType
 
 interface IProfileContract {

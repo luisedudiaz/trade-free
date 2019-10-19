@@ -1,4 +1,4 @@
-package mx.itesm.tradefree.model.models
+package mx.itesm.tradefree.model.models.User
 
 import mx.itesm.tradefree.model.utils.enums.UserType
 
@@ -7,6 +7,6 @@ data class User(
      var email: String = "",
      var type: UserType = UserType.BUYER,
      var registrationDate: String = "",
-     var products: List<Product> = emptyList()
+     var userProducts: List<UserProduct> = emptyList()
 )
 

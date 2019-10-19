@@ -11,12 +11,14 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import com.synnapps.carouselview.CarouselView
 import com.synnapps.carouselview.ImageListener
 import mx.itesm.tradefree.R
 import mx.itesm.tradefree.presenter.contracts.IAddProductContract
 import mx.itesm.tradefree.presenter.presenters.AddProductPresenter
 import mx.itesm.tradefree.view.base.BaseFragment
+import mx.itesm.tradefree.view.profile.ActivityProfile
 
 
 class FragmentAddProduct : BaseFragment(), View.OnClickListener, ImageListener,
@@ -80,11 +82,16 @@ class FragmentAddProduct : BaseFragment(), View.OnClickListener, ImageListener,
     }
 
     override fun onDataSuccess(message: String) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        hideProgressDialog()
+        Toast.makeText(activity, message, Toast.LENGTH_LONG).show()
+        val intent = Intent(context, ActivityProfile::class.java)
+        startActivity(intent)
+        activity?.finish()
     }
 
     override fun onDataFailure(message: String) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        hideProgressDialog()
+        Toast.makeText(activity, message, Toast.LENGTH_LONG).show()
     }
 
 
@@ -96,6 +103,7 @@ class FragmentAddProduct : BaseFragment(), View.OnClickListener, ImageListener,
     }
 
     private fun createProduct() {
+        showProgressDialog()
         val inputNameProduct : TextView = root.findViewById(R.id.inputNameProduct)
         val inputDescriptionProduct: TextView = root.findViewById(R.id.inputDescriptionProduct)
         addProductPresenter.createProduct(inputNameProduct.text.toString(), inputDescriptionProduct.text.toString(), carouselImages)

@@ -1,11 +1,10 @@
 package mx.itesm.tradefree.presenter.contracts
 
-import mx.itesm.tradefree.model.models.Product
-import mx.itesm.tradefree.model.models.User
+import mx.itesm.tradefree.model.models.User.UserProduct
 
 interface IHomeContract {
     interface View {
-        fun onDataSuccess(product: Product)
+        fun onDataSuccess(userProduct: UserProduct)
         fun onDataFailture(message: String)
     }
     interface Presenter{
@@ -15,7 +14,7 @@ interface IHomeContract {
         fun getProducts()
     }
     interface onHomeListener{
-        fun onSuccess(product: Product)
+        fun onSuccess(userProduct: UserProduct)
         fun onFailure(message: String)
     }
 }

@@ -2,7 +2,7 @@ package mx.itesm.tradefree.presenter.presenters
 
 import android.app.Activity
 import mx.itesm.tradefree.model.interactors.ProfileInteractor
-import mx.itesm.tradefree.model.models.User
+import mx.itesm.tradefree.model.models.User.User
 import mx.itesm.tradefree.model.utils.enums.UserType
 import mx.itesm.tradefree.presenter.contracts.IProfileContract
 

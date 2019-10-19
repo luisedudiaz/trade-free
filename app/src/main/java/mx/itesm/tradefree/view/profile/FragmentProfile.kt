@@ -8,9 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.fragment_profile.*
 import mx.itesm.tradefree.R
-import mx.itesm.tradefree.model.models.User
+import mx.itesm.tradefree.model.models.User.User
 import mx.itesm.tradefree.model.utils.enums.UserType
 import mx.itesm.tradefree.presenter.contracts.IProfileContract
 import mx.itesm.tradefree.presenter.presenters.ProfilePresenter
@@ -136,8 +135,12 @@ class FragmentProfile : BaseFragment(), View.OnClickListener,
      * This method update the email or name of the user
      */
     private fun updateUserProfile() {
-        val user = User(inputNameProfile.text.toString(), inputEmailProfile.text.toString())
+        val user = User(
+            inputNameProfile.text.toString(),
+            inputEmailProfile.text.toString()
+        )
         activity?.let { profilePresenter.updateUserInfo(it, user) }
+        view?.let { hideKeyboard(it) }
     }
 
 }

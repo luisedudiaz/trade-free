@@ -2,9 +2,7 @@ package mx.itesm.tradefree.presenter.presenters
 
 import android.net.Uri
 import mx.itesm.tradefree.model.interactors.AddProductInteractor
-import mx.itesm.tradefree.model.models.Product
 import mx.itesm.tradefree.presenter.contracts.IAddProductContract
-import mx.itesm.tradefree.view.addproduct.FragmentAddProduct
 
 class AddProductPresenter(private val addProductView: IAddProductContract.View): IAddProductContract.Presenter, IAddProductContract.onAddProductListener {
 
@@ -15,10 +13,10 @@ class AddProductPresenter(private val addProductView: IAddProductContract.View):
     }
 
     override fun onSuccess(message: String) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        addProductView.onDataSuccess(message)
     }
 
     override fun onFailure(message: String) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        addProductView.onDataFailure(message)
     }
 }

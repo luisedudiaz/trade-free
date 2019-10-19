@@ -4,10 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.ViewModelProviders
 import mx.itesm.tradefree.view.base.BaseFragment
 import mx.itesm.tradefree.R
-import mx.itesm.tradefree.model.models.Product
+import mx.itesm.tradefree.model.models.User.UserProduct
 import mx.itesm.tradefree.presenter.contracts.IHomeContract
 import mx.itesm.tradefree.presenter.presenters.HomePresenter
 
@@ -36,7 +35,7 @@ class FragmentHome : BaseFragment(), IHomeContract.View {
         homePresenter = HomePresenter(this)
     }
 
-    override fun onDataSuccess(product: Product) {
+    override fun onDataSuccess(userProduct: UserProduct) {
 
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
