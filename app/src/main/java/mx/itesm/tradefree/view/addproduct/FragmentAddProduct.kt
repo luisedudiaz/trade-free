@@ -112,7 +112,7 @@ class FragmentAddProduct : BaseFragment(), View.OnClickListener, ImageListener,
     private fun initView() {
         addProductPresenter = AddProductPresenter(this)
         // View
-        carouselView = root.findViewById(R.id.carouselView)
+        carouselView = root.findViewById(R.id.carouselViewHome)
         // Buttons
         btnUploadImages = root.findViewById(R.id.btnAddImagesProduct)
         btnUploadProduct = root.findViewById(R.id.btnAddProduct)

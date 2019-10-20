@@ -1,10 +1,11 @@
 package mx.itesm.tradefree.presenter.contracts
 
-import mx.itesm.tradefree.model.models.User.UserProduct
+import android.graphics.Bitmap
+import mx.itesm.tradefree.model.models.Product.Product
 
 interface IHomeContract {
     interface View {
-        fun onDataSuccess(userProduct: UserProduct)
+        fun onDataSuccess(products: MutableList<Product>)
         fun onDataFailture(message: String)
     }
     interface Presenter{
@@ -14,7 +15,7 @@ interface IHomeContract {
         fun getProducts()
     }
     interface onHomeListener{
-        fun onSuccess(userProduct: UserProduct)
+        fun onSuccess(products: MutableList<Product>)
         fun onFailure(message: String)
     }
 }

@@ -7,7 +7,7 @@
     tools:context=".view.addproduct.FragmentAddProduct" >
 
     <com.synnapps.carouselview.CarouselView
-        android:id="@+id/carouselView"
+        android:id="@+id/carouselViewHome"
         android:layout_width="match_parent"
         android:layout_height="200dp"
         app:fillColor="#FFFFFFFF"
@@ -54,7 +54,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/carouselView"
+        app:layout_constraintTop_toBottomOf="@+id/carouselViewHome"
         android:autofillHints="" />
 
     <EditText
