@@ -14,7 +14,7 @@
         <activity android:name="mx.itesm.tradefree.view.profileseller.ActivityProfileSeller" />
         <activity android:name="mx.itesm.tradefree.view.profile.ActivityProfile"/>
         <activity android:name="mx.itesm.tradefree.view.addproduct.ActivityAddProduct" />
-        <activity android:name="mx.itesm.tradefree.view.userProduct.ActivityProduct" />
+        <activity android:name="mx.itesm.tradefree.view.product.ActivityProduct" />
         <activity android:name="mx.itesm.tradefree.view.home.ActivityHome" />
         <activity android:name="mx.itesm.tradefree.view.register.ActivityRegister" />
         <activity android:name="mx.itesm.tradefree.view.login.ActivityLogin">

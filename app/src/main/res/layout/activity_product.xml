@@ -7,15 +7,14 @@
     tools:context=".view.userProduct.ActivityProduct">
 
     <fragment
-        android:name="mx.itesm.tradefree.view.userProduct.FragmentProduct"
+        android:id="@+id/fragmentProduct"
+        android:name="mx.itesm.tradefree.view.product.FragmentProduct"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:id="@+id/fragmentProduct"
-        tools:layout="@layout/fragment_product" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <include
         layout="@layout/floating_button"
