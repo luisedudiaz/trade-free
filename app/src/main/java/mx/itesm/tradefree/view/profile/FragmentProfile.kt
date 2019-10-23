@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import mx.itesm.tradefree.R
 import mx.itesm.tradefree.model.models.User.User
@@ -106,6 +107,9 @@ class FragmentProfile : BaseFragment(), View.OnClickListener,
         //Buttons
         btnAddProduct = root.findViewById(R.id.btnAddProductProfile)
         switch = root.findViewById(R.id.swTypeUser)
+        switch?.setOnCheckedChangeListener({ _, isChecked ->
+            val msg = if (isChecked) btnAddProduct.visibility =  View.VISIBLE else btnAddProduct.visibility =  View.INVISIBLE
+        })
         buttonAddProduct = root.findViewById(R.id.btnAddProductProfile)
         btnUpdateUserData = root.findViewById(R.id.btnUpdateUserProfile)
         // RecyclerView
