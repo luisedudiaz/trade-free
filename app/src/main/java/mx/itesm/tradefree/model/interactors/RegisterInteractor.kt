@@ -41,7 +41,7 @@ class RegisterInteractor(private val onRegisterListener: IRegisterContract.onReg
             email,
             userType,
             currentDate,
-            mutableListOf()
+            hashMapOf()
         )
         if (userId != null) {
             db.reference.child("/users").child(userId).setValue(user)

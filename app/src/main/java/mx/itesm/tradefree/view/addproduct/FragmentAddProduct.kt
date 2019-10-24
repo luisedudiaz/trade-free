@@ -18,6 +18,7 @@ import mx.itesm.tradefree.R
 import mx.itesm.tradefree.presenter.contracts.IAddProductContract
 import mx.itesm.tradefree.presenter.presenters.AddProductPresenter
 import mx.itesm.tradefree.view.base.BaseFragment
+import mx.itesm.tradefree.view.home.ActivityHome
 import mx.itesm.tradefree.view.profile.ActivityProfile
 
 
@@ -84,9 +85,9 @@ class FragmentAddProduct : BaseFragment(), View.OnClickListener, ImageListener,
     override fun onDataSuccess(message: String) {
         hideProgressDialog()
         Toast.makeText(activity, message, Toast.LENGTH_LONG).show()
-        val intent = Intent(context, ActivityProfile::class.java)
+        val intent = Intent(context, ActivityHome::class.java)
         startActivity(intent)
-        activity?.finish()
+        activity?.finishAffinity()
     }
 
     override fun onDataFailure(message: String) {

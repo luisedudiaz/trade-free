@@ -1,6 +1,7 @@
 package mx.itesm.tradefree.presenter.presenters
 
 import android.graphics.Bitmap
+import android.util.Log
 import mx.itesm.tradefree.model.interactors.HomeInteractor
 import mx.itesm.tradefree.model.models.Product.Product
 import mx.itesm.tradefree.presenter.contracts.IHomeContract

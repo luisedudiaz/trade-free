@@ -1,20 +1,15 @@
 package mx.itesm.tradefree.view.home
 
 import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.drawable.Drawable
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
-import com.squareup.picasso.Target
 import kotlinx.android.synthetic.main.adapter_home.view.*
 import mx.itesm.tradefree.R
+import mx.itesm.tradefree.model.models.Image.ImageProductPosition
 import mx.itesm.tradefree.model.models.Product.Product
-import java.lang.Exception
 
 
 class AdapterHome(private val ctxt: Context, private val products: MutableList<Product>, private val listener: onProductCardListener): RecyclerView.Adapter<AdapterHome.ProductCard>() {
@@ -39,27 +34,25 @@ class AdapterHome(private val ctxt: Context, private val products: MutableList<P
         override fun onClick(v: View?) {
             when (v?.id) {
                 R.id.btnProfileSeller -> onProductCardListener.onProfileSellerClick(adapterPosition)
-                R.id.btnSeeMore -> onProductCardListener.onSeeMoreClick(adapterPosition)
+                R.id.btnContactSeller -> onProductCardListener.onSeeMoreClick(adapterPosition)
             }
 
         }
 
         fun set(product: Product) {
             productView.btnProfileSeller.setOnClickListener(this)
-            productView.btnSeeMore.setOnClickListener(this)
+            productView.btnContactSeller.setOnClickListener(this)
             productView.txtTitleHome.text = product.title
-            productView.txtSellerHome.text = product.user.name
-            productView.carouselViewHome.pageCount = product.images.values.size
-            Log.d("IMAGES", product.images.values.size.toString())
-
-
+            productView.txtNameSeller.text = product.user.name
+            var index = 0
+            productView.carouselViewHome.pageCount = 1
             productView.carouselViewHome.setImageListener { position, imageView ->
                 product.images.values.forEach {
                     Picasso.get().load(it.toString().substring(5, it.toString().length-1)).into(imageView)
                 }
 
-
             }
+
 
         }
     }

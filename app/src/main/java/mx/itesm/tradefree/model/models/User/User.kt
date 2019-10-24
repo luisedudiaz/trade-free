@@ -7,6 +7,6 @@ data class User(
      var email: String = "",
      var type: UserType = UserType.BUYER,
      var registrationDate: String = "",
-     var userProducts: List<UserProduct> = emptyList()
+     var products: HashMap<String ,UserProduct> = hashMapOf()
 )
 

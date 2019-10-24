@@ -91,7 +91,7 @@ class LoginInteractor(private val onLoginListener: ILoginContract.onLoginListene
             email,
             userType,
             currentDate,
-            mutableListOf()
+            hashMapOf()
         )
         if (userId != null) {
             db.reference.child("/users").child(userId).setValue(user)

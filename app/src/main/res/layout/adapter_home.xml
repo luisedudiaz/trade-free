@@ -48,7 +48,7 @@
                     android:textSize="18sp" />
 
                 <TextView
-                    android:id="@+id/txtSellerHome"
+                    android:id="@+id/txtNameSeller"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
@@ -62,7 +62,7 @@
                 android:layout_height="wrap_content">
 
                 <Button
-                    android:id="@+id/btnSeeMore"
+                    android:id="@+id/btnContactSeller"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/see_more"
