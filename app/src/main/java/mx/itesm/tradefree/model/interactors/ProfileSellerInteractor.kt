@@ -19,7 +19,7 @@ class ProfileSellerInteractor(private val profileSellerInteractor: IProfileSelle
             override fun onDataChange(response: DataSnapshot) {
                 Log.d("response", response.toString())
                 if (response.exists()) {
-                    profileSellerInteractor.onSuccessUser(response.getValue(User::class.java)!!)
+                    profileSellerInteractor.onSuccessUser(response.getValue(User::class.java)!!, auth.currentUser?.uid.toString())
 
                 }
             }

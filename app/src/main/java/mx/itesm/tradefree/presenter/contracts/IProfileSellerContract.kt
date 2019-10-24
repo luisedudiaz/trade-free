@@ -4,7 +4,7 @@ import mx.itesm.tradefree.model.models.User.User
 
 interface IProfileSellerContract {
     interface View {
-        fun onDataUserSuccess(user: User)
+        fun onDataUserSuccess(user: User, uid: String)
     }
 
     interface Presenter {
@@ -16,6 +16,6 @@ interface IProfileSellerContract {
     }
 
     interface onProfileSellerListener {
-        fun onSuccessUser(user: User)
+        fun onSuccessUser(user: User, uid: String)
     }
 }

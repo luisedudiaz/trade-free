@@ -38,6 +38,7 @@ class FragmentHome : BaseFragment(), IHomeContract.View, AdapterHome.onProductCa
         AndroidNetworking.initialize(context)
         initViews()
         getProducts()
+
         return root
     }
 
@@ -50,6 +51,7 @@ class FragmentHome : BaseFragment(), IHomeContract.View, AdapterHome.onProductCa
 
     override fun onSeeMoreClick(position: Int) {
         val intent = Intent(context, ActivityProduct::class.java)
+        intent.putExtra("PRODUCT", products[position] as Serializable)
         startActivity(intent)
     }
 

@@ -14,7 +14,7 @@ class ProfileSellerPresenter(private val profileSellerView: IProfileSellerContra
         profileSellerInteractor.performUserData(uid)
     }
 
-    override fun onSuccessUser(user: User) {
-        profileSellerView.onDataUserSuccess(user)
+    override fun onSuccessUser(user: User, uid: String) {
+        profileSellerView.onDataUserSuccess(user, uid)
     }
 }
