@@ -10,6 +10,5 @@ class ActivityProduct : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_product)
         // Initialize Floating Button
-        setOnClickListenerFloatingButton(findViewById(R.id.fabMessage))
     }
 }

@@ -11,6 +11,5 @@ class ActivityProfile : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
         // Initialize Floating Button
-        setOnClickListenerFloatingButton(findViewById(R.id.fabMessage))
     }
 }

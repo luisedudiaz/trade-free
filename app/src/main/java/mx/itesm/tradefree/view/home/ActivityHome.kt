@@ -10,7 +10,6 @@ class ActivityHome : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
-        setOnClickListenerFloatingButton(findViewById(R.id.fabMessage))
     }
 
     companion object {
