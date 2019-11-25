@@ -22,5 +22,9 @@ enum class Message : IMessage {
     ADD_PRODUCT {
         override fun getMessageSuccess(): String = "Tu producto se ha agregado correctamente."
         override fun getMessageError(): String = "No se pudo agregar producto."
+    },
+    UPDATE_PRODUCT {
+        override fun getMessageSuccess(): String = "Se han actualizado correctamente los datos de tu producto."
+        override fun getMessageError(): String = "No se pudo realizar la actualización de tu producto."
     }
 }

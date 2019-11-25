@@ -1,5 +1,7 @@
 package mx.itesm.tradefree.view.profile
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -7,17 +9,40 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import mx.itesm.tradefree.R
+import mx.itesm.tradefree.model.models.Product.Product
 import mx.itesm.tradefree.model.models.User.User
 import mx.itesm.tradefree.model.utils.enums.UserType
 import mx.itesm.tradefree.presenter.contracts.IProfileContract
 import mx.itesm.tradefree.presenter.presenters.ProfilePresenter
 import mx.itesm.tradefree.view.addproduct.ActivityAddProduct
 import mx.itesm.tradefree.view.base.BaseFragment
+import mx.itesm.tradefree.view.product.ActivityProduct
+import mx.itesm.tradefree.view.profileseller.ActivityProfileSeller
+import java.io.Serializable
+
+
 
 class FragmentProfile : BaseFragment(), View.OnClickListener,
-    CompoundButton.OnCheckedChangeListener, IProfileContract.View{
+    CompoundButton.OnCheckedChangeListener, IProfileContract.View, AdapterProfile.onProductCardListener{
+    override fun onProductSuccess(value: Product) {
+        val intent = Intent(context, ActivityProduct::class.java)
+        intent.putExtra("PRODUCT", value as Serializable)
+        startActivity(intent)
+    }
+
+    override fun onProfileSellerClick(position: Int) {
+        val intent = Intent(context, ActivityProfileSeller::class.java)
+        intent.putExtra("PRODUCT", user.products.toList()[position].second as Serializable)
+        startActivity(intent)
+    }
+
+    override fun onSeeMoreClick(position: Int) {
+        profilePresenter.getProduct(user.products.toList()[position].second.id)
+
+    }
 
     private lateinit var profilePresenter: ProfilePresenter
     private lateinit var root: View
@@ -28,6 +53,7 @@ class FragmentProfile : BaseFragment(), View.OnClickListener,
     private lateinit var buttonAddProduct: Button
     private lateinit var recyclerViewProducts: RecyclerView
     private lateinit var btnUpdateUserData: Button
+    private lateinit var user: User
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -62,13 +88,22 @@ class FragmentProfile : BaseFragment(), View.OnClickListener,
     }
 
     override fun onDataProfileSuccess(user: User) {
+        this.user = user
         inputNameProfile.setText(user.name)
         inputEmailProfile.setText(user.email)
         switch.isChecked = user.type == UserType.SELLER
         btnAddProduct.visibility = if (user.type == UserType.SELLER) View.VISIBLE else View.INVISIBLE
         recyclerViewProducts.visibility = if (user.type == UserType.SELLER) View.VISIBLE else View.INVISIBLE
         switch.setOnCheckedChangeListener(this)
+
+        val layout = LinearLayoutManager(context)
+        layout.orientation = LinearLayoutManager.VERTICAL
+        recyclerViewProducts.layoutManager = layout
+        val adapterProfile = context?.let { AdapterProfile(it, user.products.toList(), this) }
+        recyclerViewProducts.adapter = adapterProfile
         hideProgressDialog()
+
+
     }
 
     override fun onProfileUpdateSuccess(message: String) {
@@ -84,16 +119,35 @@ class FragmentProfile : BaseFragment(), View.OnClickListener,
      * This method call updateTypeUser to change it in the database.
      */
     private fun changeTypeUser(active: Boolean) {
-        Log.d("ACTIVE", active.toString())
         if (active) {
-            activity?.let { profilePresenter.updateTypeUser(it, UserType.SELLER) }
-            btnAddProduct.visibility = View.VISIBLE
-            recyclerViewProducts.visibility = View.VISIBLE
+            AlertDialog.Builder(context).setTitle("Alerta").setMessage("Esta acción cambiara tu tipo de usuario a vendedor.")
+                .setPositiveButton(android.R.string.yes
+                ) { dialog, which ->
+
+                    activity?.let { profilePresenter.updateTypeUser(it, UserType.SELLER) }
+                    btnAddProduct.visibility = View.VISIBLE
+                    recyclerViewProducts.visibility = View.VISIBLE
+
+                }
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show()
+
         } else {
-            activity?.let { profilePresenter.updateTypeUser(it, UserType.BUYER) }
-            btnAddProduct.visibility = View.GONE
-            recyclerViewProducts.visibility = View.GONE
+            AlertDialog.Builder(context).setTitle("Alerta").setMessage("Al cambiar tu tipo de usuario se eliminaran los productos antes agregados.")
+                .setPositiveButton(android.R.string.yes
+                ) { dialog, which ->
+                    profilePresenter.deleteProducts()
+                    activity?.let { profilePresenter.updateTypeUser(it, UserType.BUYER) }
+                    btnAddProduct.visibility = View.GONE
+                    recyclerViewProducts.visibility = View.GONE
+
+                }
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show()
         }
+
+
+
     }
     /**
      * Initialize view components

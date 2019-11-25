@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.TextView
-import androidx.recyclerview.widget.DividerItemDecoration
 import mx.itesm.tradefree.view.base.BaseActivity
 import mx.itesm.tradefree.R
 import mx.itesm.tradefree.model.models.Product.Product
@@ -15,14 +14,39 @@ import mx.itesm.tradefree.presenter.contracts.IProfileSellerContract
 import mx.itesm.tradefree.presenter.presenters.ProfileSellerPresenter
 import mx.itesm.tradefree.view.message.ActivityMessage
 import java.io.Serializable
-import com.androidnetworking.error.ANError
 import android.graphics.Bitmap
-import com.androidnetworking.interfaces.BitmapRequestListener
-import com.androidnetworking.AndroidNetworking
-import com.androidnetworking.common.Priority
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import mx.itesm.tradefree.presenter.presenters.ProfilePresenter
+import mx.itesm.tradefree.view.product.ActivityProduct
 
 
-class ActivityProfileSeller : BaseActivity(), IProfileSellerContract.View, View.OnClickListener {
+class ActivityProfileSeller : BaseActivity(), IProfileSellerContract.View, View.OnClickListener,
+    AdapterProfileSeller.onProductCardListener {
+    override fun onProductSuccess(product: Product) {
+        val intent = Intent(this, ActivityProduct::class.java)
+        intent.putExtra("PRODUCT", product as Serializable)
+        startActivity(intent)    }
+
+    override fun onSeeMoreClick(position: Int) {
+        profileSellerPresenter.getProduct(user.products.toList()[position].second.id)
+    }
+
+    override fun onProfileSellerClick(position: Int) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun onDataUpdateSuccess(messageSuccess: String) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun onDataUpdateError(messageError: String) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun onDataImageSuccess(bitmap: Bitmap) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
 
 
     private lateinit var profileSellerPresenter: ProfileSellerPresenter
@@ -32,10 +56,12 @@ class ActivityProfileSeller : BaseActivity(), IProfileSellerContract.View, View.
     private lateinit var txtProductsSize : TextView
     private lateinit var btnContactSeller : TextView
     private lateinit var divider: View
+    private lateinit var recyclerView: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile_seller)
+        showProgressDialog()
         initViews()
         product = intent.getSerializableExtra("PRODUCT") as Product
         getUserData()
@@ -67,6 +93,7 @@ class ActivityProfileSeller : BaseActivity(), IProfileSellerContract.View, View.
         btnContactSeller = this.findViewById(R.id.btnContactSeller)
         divider = this.findViewById(R.id.divider3)
         btnContactSeller.setOnClickListener(this)
+        recyclerView = this.findViewById(R.id.recyclerViewProfileSeller)
     }
 
     override fun onDataUserSuccess(user: User, uid: String) {
@@ -82,7 +109,12 @@ class ActivityProfileSeller : BaseActivity(), IProfileSellerContract.View, View.
         Log.d("USER",  user.products.size.toString())
         txtNameSeller.text = product.user.name
         txtProductsSize.text = user.products.size.toString()
-
+        val layout = LinearLayoutManager(this)
+        layout.orientation = LinearLayoutManager.VERTICAL
+        recyclerView.layoutManager = layout
+        val adapaterProfileSeller = AdapterProfileSeller(this, user, this)
+        recyclerView.adapter = adapaterProfileSeller
+        hideProgressDialog()
     }
 
 }

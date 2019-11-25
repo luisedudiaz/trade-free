@@ -1,4 +1,4 @@
-package mx.itesm.tradefree.view.home
+package mx.itesm.tradefree.view.profileseller
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -8,11 +8,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.adapter_home.view.*
 import mx.itesm.tradefree.R
-import mx.itesm.tradefree.model.models.Image.ImageProductPosition
-import mx.itesm.tradefree.model.models.Product.Product
+import mx.itesm.tradefree.model.models.User.User
+import mx.itesm.tradefree.model.models.User.UserProduct
 
+class AdapterProfileSeller(
+    private val ctxt: Context,
+    private val user: User,
+    private val listener: onProductCardListener
+) : RecyclerView.Adapter<AdapterProfileSeller.ProductCard>() {
 
-class AdapterHome(private val ctxt: Context, private val products: MutableList<Product>, private val listener: onProductCardListener): RecyclerView.Adapter<AdapterHome.ProductCard>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductCard {
         val view = LayoutInflater.from(ctxt).inflate(R.layout.adapter_home, parent, false)
@@ -20,17 +24,15 @@ class AdapterHome(private val ctxt: Context, private val products: MutableList<P
     }
 
     override fun getItemCount(): Int {
-        return products.size
+        return user.products.size
     }
 
     override fun onBindViewHolder(holder: ProductCard, position: Int) {
-        val product = products[position]
+        val product = user.products.toList()[position].second
         holder.set(product)
-
     }
 
     inner class ProductCard(var productView: View, var onProductCardListener: onProductCardListener): RecyclerView.ViewHolder(productView), View.OnClickListener {
-
         override fun onClick(v: View?) {
             when (v?.id) {
                 R.id.btnProfileSeller -> onProductCardListener.onProfileSellerClick(adapterPosition)
@@ -39,11 +41,12 @@ class AdapterHome(private val ctxt: Context, private val products: MutableList<P
 
         }
 
-        fun set(product: Product) {
+        fun set(product: UserProduct) {
             productView.btnProfileSeller.setOnClickListener(this)
             productView.btnContactSeller.setOnClickListener(this)
             productView.txtTitleHome.text = product.title
-            productView.txtNameSeller.text = product.user.name
+            productView.txtNameSeller.visibility = View.GONE
+            productView.btnProfileSeller.visibility = View.GONE
             productView.carouselViewHome.pageCount = 1
             productView.carouselViewHome.setImageListener { position, imageView ->
                 product.images.values.forEach {
@@ -51,8 +54,6 @@ class AdapterHome(private val ctxt: Context, private val products: MutableList<P
                 }
 
             }
-
-
         }
     }
 

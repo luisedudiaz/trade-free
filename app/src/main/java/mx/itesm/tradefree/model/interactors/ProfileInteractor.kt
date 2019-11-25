@@ -1,6 +1,7 @@
 package mx.itesm.tradefree.model.interactors
 
 import android.app.Activity
+import android.util.Log
 import com.google.firebase.database.ValueEventListener
 import mx.itesm.tradefree.model.models.User.User
 import mx.itesm.tradefree.model.utils.classes.FirebaseManager
@@ -9,10 +10,48 @@ import mx.itesm.tradefree.model.utils.enums.UserType
 import mx.itesm.tradefree.presenter.contracts.IProfileContract
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DataSnapshot
+import mx.itesm.tradefree.model.models.Product.Product
 import mx.itesm.tradefree.model.utils.classes.Email
 
 
 class ProfileInteractor(private val profileInteractor: IProfileContract.onProfileListener): FirebaseManager(), IProfileContract.Interactor {
+    override fun performDeleteProducts() {
+        db.reference.child("users/${auth.currentUser?.uid}").addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onCancelled(p0: DatabaseError) {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+
+            override fun onDataChange(d: DataSnapshot) {
+                val user = d.getValue(User::class.java)
+                user?.products?.forEach {
+                    Log.d("IDPRODUCT", it.value.title)
+                    db.reference.child("products/${it.value.id}").removeValue()
+                }
+                db.reference.child("users/${auth.currentUser?.uid}/products").removeValue()
+            }
+
+        })
+
+    }
+
+    override fun performProductUser(id: String) {
+        db.reference.child("products/$id").addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onCancelled(p0: DatabaseError) {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                if(dataSnapshot.exists()) {
+                    dataSnapshot.getValue(Product::class.java)?.let {
+                        profileInteractor.onSuccessProduct(
+                            it
+                        )
+                    }
+                }
+            }
+
+        })
+    }
 
     /**
      * This method update the user type.

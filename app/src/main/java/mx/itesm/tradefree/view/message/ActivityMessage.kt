@@ -1,6 +1,7 @@
 package mx.itesm.tradefree.view.message
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
@@ -21,13 +22,15 @@ class ActivityMessage : BaseActivity(), IMessegeContract.View, View.OnClickListe
     }
 
     private fun sendMessage() {
-        if (txtToSend.text != "") {
+        Log.d("flag", (txtToSend.text != "").toString())
+        if (!txtToSend.text.isEmpty()) {
             val hashMap = HashMap<String, Any>()
             hashMap.put("receiver", uid)
             hashMap.put("message", txtToSend.text.toString())
             txtToSend.text = ""
             messagePresenter.setMessage(hashMap)
         }
+
     }
 
     override fun onSuccessGetMessages(messages: ArrayList<Message>, uid: String) {
@@ -37,6 +40,7 @@ class ActivityMessage : BaseActivity(), IMessegeContract.View, View.OnClickListe
 
         val adapterChats = AdapterMessage(this, messages, uid)
         recylerView.adapter = adapterChats
+        recylerView.scrollToPosition(messages.size - 1);
     }
 
     override fun onSuccessSetMessages() {
