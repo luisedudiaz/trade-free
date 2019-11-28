@@ -12,7 +12,7 @@ import mx.itesm.tradefree.model.models.Image.ImageProductPosition
 import mx.itesm.tradefree.model.models.Product.Product
 
 
-class AdapterHome(private val ctxt: Context, private val products: MutableList<Product>, private val listener: onProductCardListener): RecyclerView.Adapter<AdapterHome.ProductCard>() {
+class AdapterHome(private val ctxt: Context, var products: MutableList<Product>, private val listener: onProductCardListener): RecyclerView.Adapter<AdapterHome.ProductCard>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductCard {
         val view = LayoutInflater.from(ctxt).inflate(R.layout.adapter_home, parent, false)
@@ -27,6 +27,11 @@ class AdapterHome(private val ctxt: Context, private val products: MutableList<P
         val product = products[position]
         holder.set(product)
 
+    }
+
+    fun updateList(newList: MutableList<Product>) {
+        products = newList
+        notifyDataSetChanged()
     }
 
     inner class ProductCard(var productView: View, var onProductCardListener: onProductCardListener): RecyclerView.ViewHolder(productView), View.OnClickListener {

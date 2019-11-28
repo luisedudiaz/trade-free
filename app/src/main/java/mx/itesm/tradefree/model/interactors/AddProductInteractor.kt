@@ -27,8 +27,8 @@ class AddProductInteractor(private val addProductorInteractor: IAddProductContra
 
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 val user = dataSnapshot.getValue(User::class.java)
-                val userProduct = UserProduct(uuidProduct.toString() ,title, description)
-                val product = user?.email?.let { ProductUser(uid.toString(), user.name, it) }?.let { Product(uuidProduct.toString(), title, description, it)}
+                val userProduct = UserProduct(uuidProduct.toString() ,title, description, true)
+                val product = user?.email?.let { ProductUser(uid.toString(), user.name, it) }?.let { Product(uuidProduct.toString(), title, description, true ,it)}
                 refUserProduct.setValue(userProduct).addOnCompleteListener {
                     if (it.isSuccessful) {
                         refProduct.setValue(product).addOnCompleteListener { itProduct ->

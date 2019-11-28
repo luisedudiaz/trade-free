@@ -7,5 +7,6 @@ data class UserProduct(
     var id: String = "",
     var title: String = "",
     var description: String = "",
+    var active: Boolean = true,
     var images: HashMap<String, Any> = hashMapOf()
 ) : Serializable

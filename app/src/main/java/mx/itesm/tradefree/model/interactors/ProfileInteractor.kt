@@ -23,11 +23,21 @@ class ProfileInteractor(private val profileInteractor: IProfileContract.onProfil
 
             override fun onDataChange(d: DataSnapshot) {
                 val user = d.getValue(User::class.java)
-                user?.products?.forEach {
-                    Log.d("IDPRODUCT", it.value.title)
-                    db.reference.child("products/${it.value.id}").removeValue()
+                if (user?.type == UserType.BUYER) {
+                    user?.products?.forEach {
+                        Log.d("IDPRODUCT", it.value.title)
+                        db.reference.child("products/${it.value.id}").child("active").setValue(false)
+                        db.reference.child("users/${auth.currentUser?.uid}/products/${it.value.id}").child("active").setValue(false)
+                    }
+                } else {
+                    user?.products?.forEach {
+                        Log.d("IDPRODUCT", it.value.title)
+                        db.reference.child("products/${it.value.id}").child("active").setValue(true)
+                        db.reference.child("users/${auth.currentUser?.uid}/products/${it.value.id}").child("active").setValue(true)
+                    }
                 }
-                db.reference.child("users/${auth.currentUser?.uid}/products").removeValue()
+
+
             }
 
         })

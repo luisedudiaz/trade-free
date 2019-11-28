@@ -30,7 +30,9 @@ class HomeInteractor(private val homeInteractor: IHomeContract.onHomeListener): 
                     dataSnapshot.children.forEach {
                         val product = it.getValue(Product::class.java)
                         if (product != null) {
-                            products.add(product)
+                            if (product.active) {
+                                products.add(product)
+                            }
                         }
                     }
                     homeInteractor.onSuccess(products)

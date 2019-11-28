@@ -81,6 +81,7 @@ class FragmentProfile : BaseFragment(), View.OnClickListener,
 
     override fun onTypeProfileSuccess(message: String) {
         Toast.makeText(activity, message, Toast.LENGTH_LONG).show()
+        profilePresenter.deleteProducts()
     }
 
     override fun onTypeProfileFailure(message: String) {
@@ -136,7 +137,6 @@ class FragmentProfile : BaseFragment(), View.OnClickListener,
             AlertDialog.Builder(context).setTitle("Alerta").setMessage("Al cambiar tu tipo de usuario se eliminaran los productos antes agregados.")
                 .setPositiveButton(android.R.string.yes
                 ) { dialog, which ->
-                    profilePresenter.deleteProducts()
                     activity?.let { profilePresenter.updateTypeUser(it, UserType.BUYER) }
                     btnAddProduct.visibility = View.GONE
                     recyclerViewProducts.visibility = View.GONE
