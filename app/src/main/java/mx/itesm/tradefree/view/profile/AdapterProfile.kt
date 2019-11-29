@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.adapter_home.view.*
 import mx.itesm.tradefree.R
+import mx.itesm.tradefree.model.models.Product.Product
 import mx.itesm.tradefree.model.models.User.UserProduct
 
 class AdapterProfile(
@@ -34,15 +35,18 @@ class AdapterProfile(
             when (v?.id) {
                 R.id.btnProfileSeller -> onProductCardListener.onProfileSellerClick(adapterPosition)
                 R.id.btnContactSeller -> onProductCardListener.onSeeMoreClick(adapterPosition)
+                R.id.btnDeleteProduct -> onProductCardListener.onDeleteProduct(keys[adapterPosition].second)
             }
         }
 
         fun set(product: UserProduct) {
             productView.btnProfileSeller.setOnClickListener(this)
             productView.btnContactSeller.setOnClickListener(this)
+            productView.btnDeleteProduct.setOnClickListener(this)
             productView.txtTitleHome.text = product.title
             productView.txtNameSeller.visibility = View.GONE
             productView.btnProfileSeller.visibility = View.GONE
+            productView.btnDeleteProduct.visibility = View.VISIBLE
             productView.carouselViewHome.pageCount = 1
             productView.carouselViewHome.setImageListener { position, imageView ->
                 product.images.values.forEach {
@@ -58,5 +62,6 @@ class AdapterProfile(
     interface onProductCardListener {
         fun onProfileSellerClick(position: Int)
         fun onSeeMoreClick(position: Int)
+        fun onDeleteProduct(product: UserProduct)
     }
 }

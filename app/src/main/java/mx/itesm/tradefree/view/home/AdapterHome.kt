@@ -40,6 +40,7 @@ class AdapterHome(private val ctxt: Context, var products: MutableList<Product>,
             when (v?.id) {
                 R.id.btnProfileSeller -> onProductCardListener.onProfileSellerClick(adapterPosition)
                 R.id.btnContactSeller -> onProductCardListener.onSeeMoreClick(adapterPosition)
+                R.id.btnDeleteProduct -> onProductCardListener.onDeleteProduct(adapterPosition)
             }
 
         }
@@ -47,6 +48,7 @@ class AdapterHome(private val ctxt: Context, var products: MutableList<Product>,
         fun set(product: Product) {
             productView.btnProfileSeller.setOnClickListener(this)
             productView.btnContactSeller.setOnClickListener(this)
+            productView.btnDeleteProduct.setOnClickListener(this)
             productView.txtTitleHome.text = product.title
             productView.txtNameSeller.text = product.user.name
             productView.carouselViewHome.pageCount = 1
@@ -64,5 +66,6 @@ class AdapterHome(private val ctxt: Context, var products: MutableList<Product>,
     interface onProductCardListener {
         fun onProfileSellerClick(position: Int)
         fun onSeeMoreClick(position: Int)
+        fun onDeleteProduct(position: Int)
     }
 }

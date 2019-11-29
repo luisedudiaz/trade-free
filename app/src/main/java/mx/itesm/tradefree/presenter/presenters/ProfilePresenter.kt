@@ -4,10 +4,19 @@ import android.app.Activity
 import mx.itesm.tradefree.model.interactors.ProfileInteractor
 import mx.itesm.tradefree.model.models.Product.Product
 import mx.itesm.tradefree.model.models.User.User
+import mx.itesm.tradefree.model.models.User.UserProduct
 import mx.itesm.tradefree.model.utils.enums.UserType
 import mx.itesm.tradefree.presenter.contracts.IProfileContract
 
 class ProfilePresenter(private val profileView: IProfileContract.View): IProfileContract.Presenter, IProfileContract.onProfileListener {
+    override fun onProductDeleted() {
+        profileView.onProductDeletedSuccess()
+    }
+
+    override fun deleteProduct(product: UserProduct) {
+        profileInteractor.performDeleteProduct(product)
+    }
+
     override fun deleteProducts() {
         profileInteractor.performDeleteProducts()
     }

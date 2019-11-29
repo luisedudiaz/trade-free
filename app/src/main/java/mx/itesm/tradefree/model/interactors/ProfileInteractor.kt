@@ -11,10 +11,21 @@ import mx.itesm.tradefree.presenter.contracts.IProfileContract
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DataSnapshot
 import mx.itesm.tradefree.model.models.Product.Product
+import mx.itesm.tradefree.model.models.User.UserProduct
 import mx.itesm.tradefree.model.utils.classes.Email
 
 
 class ProfileInteractor(private val profileInteractor: IProfileContract.onProfileListener): FirebaseManager(), IProfileContract.Interactor {
+    override fun performDeleteProduct(product: UserProduct) {
+        val uid = auth.currentUser?.uid
+        db.reference.child("users/$uid/products/${product.id}").removeValue()
+        db.reference.child("products/${product.id}").removeValue().addOnCompleteListener {
+            if (it.isSuccessful) {
+                profileInteractor.onProductDeleted()
+            }
+        }
+    }
+
     override fun performDeleteProducts() {
         db.reference.child("users/${auth.currentUser?.uid}").addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {

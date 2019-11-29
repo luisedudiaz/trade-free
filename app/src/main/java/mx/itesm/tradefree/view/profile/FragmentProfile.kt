@@ -1,7 +1,6 @@
 package mx.itesm.tradefree.view.profile
 
 import android.app.AlertDialog
-import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -14,11 +13,13 @@ import androidx.recyclerview.widget.RecyclerView
 import mx.itesm.tradefree.R
 import mx.itesm.tradefree.model.models.Product.Product
 import mx.itesm.tradefree.model.models.User.User
+import mx.itesm.tradefree.model.models.User.UserProduct
 import mx.itesm.tradefree.model.utils.enums.UserType
 import mx.itesm.tradefree.presenter.contracts.IProfileContract
 import mx.itesm.tradefree.presenter.presenters.ProfilePresenter
 import mx.itesm.tradefree.view.addproduct.ActivityAddProduct
 import mx.itesm.tradefree.view.base.BaseFragment
+import mx.itesm.tradefree.view.home.ActivityHome
 import mx.itesm.tradefree.view.product.ActivityProduct
 import mx.itesm.tradefree.view.profileseller.ActivityProfileSeller
 import java.io.Serializable
@@ -27,6 +28,13 @@ import java.io.Serializable
 
 class FragmentProfile : BaseFragment(), View.OnClickListener,
     CompoundButton.OnCheckedChangeListener, IProfileContract.View, AdapterProfile.onProductCardListener{
+    override fun onProductDeletedSuccess() {
+        Log.d("DELETED", "PRODUCT_DELETED")
+        Toast.makeText(activity, "Se ha eliminado correctamente el producto.", Toast.LENGTH_LONG).show()
+        val intent = Intent(context, ActivityHome::class.java)
+        startActivity(intent)
+    }
+
     override fun onProductSuccess(value: Product) {
         val intent = Intent(context, ActivityProduct::class.java)
         intent.putExtra("PRODUCT", value as Serializable)
@@ -41,6 +49,23 @@ class FragmentProfile : BaseFragment(), View.OnClickListener,
 
     override fun onSeeMoreClick(position: Int) {
         profilePresenter.getProduct(user.products.toList()[position].second.id)
+
+    }
+
+    override fun onDeleteProduct(product: UserProduct) {
+        AlertDialog.Builder(context).setTitle("Alerta").setMessage("El producto se eliminará permanentemente")
+            .setPositiveButton("Eliminar"
+            ) { dialog, which ->
+
+                profilePresenter.deleteProduct(product)
+
+            }.setNegativeButton("Cancelar"
+            ) { dialog, which->
+
+
+            }
+            .setIcon(android.R.drawable.ic_dialog_alert)
+            .show()
 
     }
 

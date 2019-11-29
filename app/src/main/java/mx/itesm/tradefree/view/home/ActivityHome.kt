@@ -71,6 +71,9 @@ class ActivityHome :
         return true
     }
 
+    override fun onDeleteProduct(position: Int) {
+
+    }
 
     override fun onProfileSellerClick(position: Int) {
         val intent = Intent(this, ActivityProfileSeller::class.java)

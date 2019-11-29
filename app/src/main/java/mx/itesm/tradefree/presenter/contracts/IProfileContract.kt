@@ -3,6 +3,7 @@ package mx.itesm.tradefree.presenter.contracts
 import android.app.Activity
 import mx.itesm.tradefree.model.models.Product.Product
 import mx.itesm.tradefree.model.models.User.User
+import mx.itesm.tradefree.model.models.User.UserProduct
 import mx.itesm.tradefree.model.utils.enums.UserType
 
 interface IProfileContract {
@@ -13,6 +14,7 @@ interface IProfileContract {
         fun onProfileUpdateSuccess(message: String)
         fun onProfileUpdateFailure(message: String)
         fun onProductSuccess(value: Product)
+        fun onProductDeletedSuccess()
     }
 
     interface Presenter {
@@ -21,6 +23,7 @@ interface IProfileContract {
         fun getUserInfo()
         fun getProduct(id: String)
         fun deleteProducts()
+        fun deleteProduct(product: UserProduct)
     }
 
     interface Interactor {
@@ -29,6 +32,7 @@ interface IProfileContract {
         fun getUserInfo()
         fun performProductUser(id: String)
         fun performDeleteProducts()
+        fun performDeleteProduct(product: UserProduct)
     }
 
     interface onProfileListener {
@@ -38,5 +42,6 @@ interface IProfileContract {
         fun onProfileUpdateSuccess(message: String)
         fun onProfileUpdateFailure(message: String)
         fun onSuccessProduct(value: Product)
+        fun onProductDeleted()
     }
 }

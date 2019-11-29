@@ -4,4 +4,5 @@
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
     <color name="coloBackgroudChat">#E1E1E1</color>
+    <color name="colorError">#D91D1D</color>
 </resources>

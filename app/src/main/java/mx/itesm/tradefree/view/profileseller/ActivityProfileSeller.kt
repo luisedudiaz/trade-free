@@ -32,6 +32,10 @@ class ActivityProfileSeller : BaseActivity(), IProfileSellerContract.View, View.
         profileSellerPresenter.getProduct(user.products.toList()[position].second.id)
     }
 
+    override fun onDeleteProduct(position: Int) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
     override fun onProfileSellerClick(position: Int) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }

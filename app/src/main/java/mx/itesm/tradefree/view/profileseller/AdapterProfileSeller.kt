@@ -37,6 +37,8 @@ class AdapterProfileSeller(
             when (v?.id) {
                 R.id.btnProfileSeller -> onProductCardListener.onProfileSellerClick(adapterPosition)
                 R.id.btnContactSeller -> onProductCardListener.onSeeMoreClick(adapterPosition)
+                R.id.btnDeleteProduct -> onProductCardListener.onDeleteProduct(adapterPosition)
+
             }
 
         }
@@ -60,5 +62,6 @@ class AdapterProfileSeller(
     interface onProductCardListener {
         fun onProfileSellerClick(position: Int)
         fun onSeeMoreClick(position: Int)
+        fun onDeleteProduct(position: Int)
     }
 }
